@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "auto-gemsets"
-  s.version = "0.1.0"
+  s.version = "0.1.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Dayton Nolan"]
@@ -26,8 +26,8 @@ Gem::Specification.new do |s|
     "Rakefile",
     "VERSION",
     "auto-gemsets.gemspec",
+    "auto_gemsets.sh",
     "bin/gemset",
-    "gemsets.sh",
     "lib/auto-gemsets.rb",
     "lib/auto-gemsets/application.rb",
     "spec/application_spec.rb",
