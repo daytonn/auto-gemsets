@@ -18,6 +18,7 @@ function auto_gemsets() {
       export GEM_HOME="${GEMSET_ROOT}/$gemset"
       export GEM_ROOT="${GEMSET_ROOT}/$gemset" # chruby specific
       export GEM_PATH="${GEM_HOME}:${DEFAULT_GEMSET}"
+      echo "$PATH" | grep -q "${GEMSET_ROOT}/${gemset}/bin" || export PATH="$PATH:${GEMSET_ROOT}/${gemset}/bin"
       export GEMSET="${gemset}"
       export GEMFILE="${gemfile}"
       create_gemset_if_missing && list_gemset
@@ -33,12 +34,14 @@ function auto_gemsets() {
 function set_default_gemset() {
   if [ ! -z "${DEFAULT_GEMSET}" ]; then
     if [ ! "$GEM_PATH" == "${DEFAULT_GEMSET}" ]; then
-      export GEM_HOME="${DEFAULT_GEMSET}"
-      export GEM_ROOT="${DEFAULT_GEMSET}"
-      export GEM_PATH="${DEFAULT_GEMSET}"
+      export GEM_HOME="$DEFAULT_GEMSET"
+      export GEM_ROOT="$DEFAULT_GEMSET"
+      export GEM_PATH="$DEFAULT_GEMSET"
       export GEMSET="daytonn"
       export GEMFILE="*default"
-      export PATH="$PATH:${DEFAULT_GEMSET}/bin"
+
+      echo "$PATH" | grep -q "${DEFAULT_GEMSET}/bin" || export PATH="$PATH:${DEFAULT_GEMSET}/bin"
+
       if [ -z "$GEMSET_PRELOAD" ]; then
         list_gemset
       fi
