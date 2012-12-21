@@ -113,6 +113,11 @@ module AutoGemsets
       end
     end
 
+    def edit()
+      raise "You must set $EDITOR or $TERM_EDITOR to edit Gemfiles" unless ENV['EDITOR'] || ENV['TERM_EDITOR']
+      %x{#{ENV['EDITOR'] || ENV['TERM_EDITOR']} #{ENV['GEMFILE']}}
+    end
+
     private
       def parse_options
         @options = {}
