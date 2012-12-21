@@ -17,8 +17,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "auto-gemsets"
   gem.homepage = "http://github.com/daytonn/auto-gemsets"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{Automatic, shimless, gemsets. For use with your ruby-version manager of choice }
+  gem.description = %Q{auto-gemsets creates a gemset named after the parent directory of every Gemfile you encounter. This let's you automatically scope your gems without using shims or creating gemsets. }
   gem.email = "dnolan@gmail.com"
   gem.authors = ["Dayton Nolan"]
   # dependencies defined in Gemfile
