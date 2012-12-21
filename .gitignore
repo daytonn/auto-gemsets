@@ -1,18 +1,22 @@
-*.gem
-*.rbc
-.bundle
-.config
-coverage
-InstalledFiles
-lib/bundler/man
-pkg
+# rdoc generated
 rdoc
-spec/reports
-test/tmp
-test/version_tmp
-tmp
 
-# YARD artifacts
+# yard generated
+doc
 .yardoc
-_yardoc
-doc/
+
+# bundler
+.bundle
+
+# jeweler generated
+pkg
+
+.DS_Store
+
+# For emacs:
+#*~
+#\#*
+#.\#*
+
+# For vim:
+*.swp
