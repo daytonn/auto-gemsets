@@ -21,20 +21,20 @@ module AutoGemsets
       @output = output
       @input = input
       @args = args
-      @command = @args.empty? ? :current : @args.shift.to_sym
+      @command = @args.shift.to_sym unless @args.empty? || @args.first =~ /^-/
 
       parse_options
     end
 
     def current
-      @output.puts ENV['GEMSET']
+      @output.puts "-> #{ENV['GEMSET']}"
     end
 
     def run
       if @command
-        self.send @command, *@args unless @command =~ /^-/
+        self.send @command, *@args
       else
-        help
+        options[:help] ? help : self.send(:current)
       end
     end
 
@@ -142,20 +142,21 @@ module AutoGemsets
 
           opts.on('-h', '--help', 'Display help') do
             @options[:help] = true
-            help
           end
         end.parse!
+
+        @args.reject! { |a| a =~ /^-/ }
       end
 
       def help
-        puts AutoGemsets::HELP
+        @output.puts AutoGemsets::HELP
       end
 
       def version
         version = File.read("#{AutoGemsets::base_directory}/VERSION")
         message = "auto-gemsets #{version}\n"
         message << "Copyright (c) #{Time.now.year} Dayton Nolan\n"
-        puts message
+        @output.puts message
       end
 
       def gemset_path(gemset)

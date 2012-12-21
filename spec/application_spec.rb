@@ -27,7 +27,7 @@ describe AutoGemsets::Application do
     end
 
     it "shows the current gemset" do
-      @output.should_receive(:puts).with(@gemset)
+      @output.should_receive(:puts).with("-> #{@gemset}")
       @app.current
     end
 
