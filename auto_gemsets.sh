@@ -18,20 +18,13 @@ function auto_gemsets() {
   local dir="$PWD"
   local version_file
 
-  if [ -z "$DEFAULT_GEMSET" ]; then
-    export DEFAULT_GEMSET="${GEMSET_ROOT}/${USER}"
-    if [ ! -d "$DEFAULT_GEMSET" ]; then
-      mkdir -p "$DEFAULT_GEMSET"
-    fi
-  fi
-
   until [[ -z "$dir" ]]; do
     gemfile="$dir/Gemfile"
     IFS='/' read -a gemfile_path_parts <<< "$gemfile"
 
     gemset="${gemfile_path_parts[${#gemfile_path_parts[@]}-2]}"
 
-    if   [[ "${GEMSET_ROOT}/$gemset:${DEFAULT_GEMSET}" == "$GEMSET_PATH" ]]; then return
+    if   [[ "${GEMSET_PATH//:$DEFAULT_GEMSET}" == "${GEMSET_ROOT}/$gemset" ]]; then return
     elif [[ -f "$gemfile" ]]; then
       export GEMSET_PATH="${GEMSET_ROOT}/$gemset:${DEFAULT_GEMSET}"
       export GEMSET="${gemset}"
