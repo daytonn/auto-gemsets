@@ -41,7 +41,6 @@ module AutoGemsets
     def ls
       gemsets = Dir.glob(File.join(ENV['HOME'], '.gemsets', '*')).map do |d|
         gemset = File.basename(d)
-        default_gemset = File.basename(ENV['DEFAULT_GEMSET'])
         case gemset
         when default_gemset
           gemset = "   #{gemset}*"
@@ -162,6 +161,10 @@ module AutoGemsets
 
       def gemset_path(gemset)
         File.join(AutoGemsets::GEMSET_ROOT, gemset)
+      end
+
+      def default_gemset
+        File.basename(ENV['DEFAULT_GEMSET'])
       end
   end
 
