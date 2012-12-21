@@ -36,8 +36,8 @@ function set_default_gemset() {
       export GEM_HOME="${DEFAULT_GEMSET}"
       export GEM_ROOT="${DEFAULT_GEMSET}"
       export GEM_PATH="${DEFAULT_GEMSET}"
-      export GEMSET="*default"
-      export GEMFILE="auto-gemsets"
+      export GEMSET="daytonn*"
+      export GEMFILE="*default"
       if [ -z "$GEMSET_PRELOAD" ]; then
         list_gemset
       fi
