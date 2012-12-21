@@ -20,7 +20,7 @@ function auto_gemsets() {
       export GEM_PATH="${GEM_HOME}:${DEFAULT_GEMSET}"
       export GEMSET="${gemset}"
       export GEMFILE="${gemfile}"
-      create_gemset_if_missing && echo "Now using ${GEMSET} gemset via ${GEMFILE}"
+      create_gemset_if_missing && list_gemset
       break
     elif [[ ! -f "$gemfile" ]]; then
       set_default_gemset
@@ -36,9 +36,17 @@ function set_default_gemset() {
       export GEM_HOME="${DEFAULT_GEMSET}"
       export GEM_ROOT="${DEFAULT_GEMSET}"
       export GEM_PATH="${DEFAULT_GEMSET}"
-      echo "Now using default gemset $(basename $DEFAULT_GEMSET) via ${DEFAULT_GEMSET}"
+      export GEMSET=$(basename $DEFAULT_GEMSET)
+      export GEMFILE="*default"
+      if [ -z "$GEMSET_PRELOAD" ]; then
+        list_gemset
+      fi
     fi
   fi
+}
+
+function list_gemset() {
+  echo "Now using ${GEMSET} gemset via ${GEMFILE}"
 }
 
 if [ ! -n "$GEMSET_ROOT" ]; then
@@ -57,5 +65,11 @@ else
   fi
 fi
 
-# Set default on load
-set_default_gemset
+function init() {
+  # Set default on load
+  GEMSET_PRELOAD="true"
+  set_default_gemset
+  unset GEMSET_PRELOAD
+}
+
+init
