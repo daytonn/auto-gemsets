@@ -14,9 +14,22 @@ function switch_gemset() {
   break
 }
 
+function default_gemset() {
+  export GEMSET_PATH="${DEFAULT_GEMSET}"
+  export GEM_HOME="${DEFAULT_GEMSET}"
+  export GEM_ROOT="${DEFAULT_GEMSET}"
+}
+
 function auto_gemsets() {
   local dir="$PWD"
   local version_file
+
+  if [ -z "$DEFAULT_GEMSET" ]; then
+    export DEFAULT_GEMSET="${GEMSET_ROOT}/${USER}"
+    if [ ! -d "$DEFAULT_GEMSET" ]; then
+      mkdir -p "$DEFAULT_GEMSET"
+    fi
+  fi
 
   until [[ -z "$dir" ]]; do
     gemfile="$dir/Gemfile"
@@ -24,9 +37,9 @@ function auto_gemsets() {
 
     gemset="${gemfile_path_parts[${#gemfile_path_parts[@]}-2]}"
 
-    if   [[ "${GEMSET_ROOT}/$gemset" == "$GEMSET_PATH" ]]; then return
+    if   [[ "${GEMSET_ROOT}/$gemset:${DEFAULT_GEMSET}" == "$GEMSET_PATH" ]]; then return
     elif [[ -f "$gemfile" ]]; then
-      export GEMSET_PATH="${GEMSET_ROOT}/$gemset"
+      export GEMSET_PATH="${GEMSET_ROOT}/$gemset:${DEFAULT_GEMSET}"
       export GEMSET="${gemset}"
       export GEMFILE="${gemfile}"
       create_or_switch_gemset
