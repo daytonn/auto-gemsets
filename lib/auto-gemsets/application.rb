@@ -27,7 +27,9 @@ module AutoGemsets
     end
 
     def current
-      @output.puts "-> #{ENV['GEMSET']}"
+      gemset = "-> #{ENV['GEMSET']}";
+      gemset = "#{gemset}*" if ENV['GEMSET'] == default_gemset
+      @output.puts gemset
     end
 
     def run
