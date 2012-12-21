@@ -1,6 +1,7 @@
 function create_or_switch_gemset() {
   if [ ! -d "${GEMSET_PATH}" ]; then
     mkdir -p "${GEMSET_PATH}"
+    echo "${GEMSET} created. run gem install bundler"
   fi
 
   switch_gemset
