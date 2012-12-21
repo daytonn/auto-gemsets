@@ -1,17 +1,41 @@
-When gemset is called without a sub command, it will display the current gemset.
-  The gemset command also has various sub-commands that help you manage your gemset library
+gemset [command]
 
-Usage: gemset [command]
+  When the gemset command is called with no arguments,
+  it simply displays the current gemset in use.
+  Note that the GEM environment includes both
+  the current and default gemset's gems.
 
-gemset - display current gemset
+Commands
+========
 
-commands:
+  ls, list
+    List all gemsets in your GEMSET_ROOT.
+    The gemset with the -> at the begining is the current gemset.
+    The gemset with the * at the end is the default gemset.
+    Note that the GEM environment includes both the current and default gemset's gems.
 
-list - list all gemsets in your GEMSET_ROOT
+  rm, remove
+    gemset rm (gemset)
+    gemset remove (gemset)
 
-  gemset list
+    Removes the given gemset from the GEMSET_ROOT.
+    To prevent unwanted deletions, a confirmation dialog will ask if you wish to continue.
 
-rm - completely remove a gemset from your GEMSET_ROOT
+  touch, create
+    gemset touch (gemset)
+    gemset create (gemset)
 
-  gemset rm my-gemset
+    Create a new gemset in the GESET_ROOT with the given name
 
+  mv, rename
+    gemset mv (gemset) (name)
+    gemset rename (gemset) (name)
+
+    Renames the given gemset with the given name within the GESET_ROOT.
+    If the new gemset name conflicts with an existing gemset,
+    a confirmation dialog will ask if you wish to continue
+
+  edit
+    gemset edit (gemset)
+
+    Opens the gemset's Gemfile in your default EDITOR or TERM_EDITOR
