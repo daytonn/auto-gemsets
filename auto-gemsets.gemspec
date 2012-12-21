@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
     "README.md",
     "Rakefile",
     "VERSION",
+    "auto-gemsets.gemspec",
     "bin/gemset",
     "gemsets.sh",
     "lib/auto-gemsets.rb",
