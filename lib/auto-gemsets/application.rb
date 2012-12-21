@@ -86,7 +86,7 @@ module AutoGemsets
       confirmation = @input.gets.chomp
       if confirmation =~ /^y/i
         if File.exists?(gemset_path(gemset)) && FileUtils.rm_rf(gemset_path(gemset))
-          @output.puts "'#{gemset}' gemset removed!"
+          @output.puts "#{gemset} gemset removed!"
         end
       else
         @output.puts "No gemsets were harmed."

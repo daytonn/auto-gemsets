@@ -56,7 +56,7 @@ describe AutoGemsets::Application do
 
     it "removes the gemset if the user enters y" do
       @output.should_receive(:puts).once.with("Are you sure you wish to delete the #{@gemset} gemset? y/n")
-      @output.should_receive(:puts).once.with("'#{@gemset}' gemset removed!")
+      @output.should_receive(:puts).once.with("#{@gemset} gemset removed!")
       @input.stub!(:gets) { "y" }
       @app.remove @gemset
       expect(File.exists?(@random_gemset)).to be_false
