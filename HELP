@@ -1,0 +1,17 @@
+When gemset is called without a sub command, it will display the current gemset.
+  The gemset command also has various sub-commands that help you manage your gemset library
+
+Usage: gemset [command]
+
+gemset - display current gemset
+
+commands:
+
+list - list all gemsets in your GEMSET_ROOT
+
+  gemset list
+
+rm - completely remove a gemset from your GEMSET_ROOT
+
+  gemset rm my-gemset
+
