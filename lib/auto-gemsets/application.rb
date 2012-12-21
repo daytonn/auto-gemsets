@@ -39,7 +39,20 @@ module AutoGemsets
     end
 
     def ls
-      @output.puts Dir.glob(File.join(ENV['HOME'], '.gemsets', '*')).map { |d| File.basename(d) }.join "\n"
+      gemsets = Dir.glob(File.join(ENV['HOME'], '.gemsets', '*')).map do |d|
+        gemset = File.basename(d)
+        default_gemset = File.basename(ENV['DEFAULT_GEMSET'])
+        if gemset == default_gemset
+          gemset = "   #{gemset}*"
+        elsif gemset == ENV['GEMSET']
+          gemset = "-> #{gemset}"
+        else
+          gemset = "   #{gemset}"
+        end
+        gemset
+      end
+
+      @output.puts gemsets.join "\n"
     end
 
     def list

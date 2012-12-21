@@ -43,6 +43,18 @@ describe AutoGemsets::Application do
       @output.should_receive(:puts) { |list| expect(list).to match(/#{@gemset}/) }
       @app.list
     end
+
+    it "puts a star on the default gemset" do
+      ENV['DEFAULT_GEMSET'] = @gemset
+      @output.should_receive(:puts) { |list| expect(list).to match(/#{@gemset}\*/) }
+      @app.list
+    end
+
+    it "puts an arrow on the current gemset" do
+      ENV['GEMSET'] = @gemset
+      @output.should_receive(:puts) { |list| expect(list).to match(/-> #{@gemset}/) }
+      @app.list
+    end
   end
 
   describe 'remove' do
