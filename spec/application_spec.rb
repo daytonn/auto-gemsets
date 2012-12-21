@@ -32,7 +32,7 @@ describe AutoGemsets::Application do
     end
 
     it "shows the current gemset when called with no arguments" do
-      @output.should_receive(:puts).with(@gemset)
+      @output.should_receive(:puts).with("-> #{@gemset}")
       app = AutoGemsets::Application.new(@output, @input, [])
       app.run
     end
