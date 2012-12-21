@@ -1,17 +1,7 @@
-function create_or_switch_gemset() {
+function create_gemset_if_missing() {
   if [ ! -d "${GEMSET_ROOT}/${GEMSET}" ]; then
     mkdir -p "${GEMSET_ROOT}/${GEMSET}" && echo "${GEMSET} created. run gem install bundler"
   fi
-
-  switch_gemset
-}
-
-function switch_gemset() {
-  export GEM_PATH="${GEMSET_PATH}"
-  export GEM_HOME="${GEMSET_PATH}"
-  export GEM_ROOT="${GEMSET_PATH}"
-  echo "Now using ${GEMSET} gemset via ${GEMFILE}"
-  break
 }
 
 function auto_gemsets() {
@@ -21,19 +11,34 @@ function auto_gemsets() {
   until [[ -z "$dir" ]]; do
     gemfile="$dir/Gemfile"
     IFS='/' read -a gemfile_path_parts <<< "$gemfile"
-
     gemset="${gemfile_path_parts[${#gemfile_path_parts[@]}-2]}"
 
-    if   [[ "${GEMSET_PATH//:$DEFAULT_GEMSET}" == "${GEMSET_ROOT}/$gemset" ]]; then return
+    if   [[ "${GEM_PATH//:$DEFAULT_GEMSET}" == "${GEMSET_ROOT}/$gemset" ]]; then return
     elif [[ -f "$gemfile" ]]; then
-      export GEMSET_PATH="${GEMSET_ROOT}/$gemset:${DEFAULT_GEMSET}"
+      export GEM_HOME="${GEMSET_ROOT}/$gemset"
+      export GEM_ROOT="${GEMSET_ROOT}/$gemset" # chruby specific
+      export GEM_PATH="${GEM_HOME}:${DEFAULT_GEMSET}"
       export GEMSET="${gemset}"
       export GEMFILE="${gemfile}"
-      create_or_switch_gemset
+      create_gemset_if_missing && echo "Now using ${GEMSET} gemset via ${GEMFILE}"
+      break
+    elif [[ ! -f "$gemfile" ]]; then
+      set_default_gemset
     fi
 
     dir="${dir%/*}"
   done
+}
+
+function set_default_gemset() {
+  if [ ! -z "${DEFAULT_GEMSET}" ]; then
+    if [ ! "$GEM_PATH" == "${DEFAULT_GEMSET}" ]; then
+      export GEM_HOME="${DEFAULT_GEMSET}"
+      export GEM_ROOT="${DEFAULT_GEMSET}"
+      export GEM_PATH="${DEFAULT_GEMSET}"
+      echo "Now using default gemset $(basename $DEFAULT_GEMSET) via ${DEFAULT_GEMSET}"
+    fi
+  fi
 }
 
 if [ ! -n "$GEMSET_ROOT" ]; then
@@ -51,3 +56,6 @@ else
     PROMPT_COMMAND="auto_gemsets"
   fi
 fi
+
+# Set default on load
+set_default_gemset
