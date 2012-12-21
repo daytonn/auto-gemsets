@@ -14,12 +14,6 @@ function switch_gemset() {
   break
 }
 
-function default_gemset() {
-  export GEMSET_PATH="${DEFAULT_GEMSET}"
-  export GEM_HOME="${DEFAULT_GEMSET}"
-  export GEM_ROOT="${DEFAULT_GEMSET}"
-}
-
 function auto_gemsets() {
   local dir="$PWD"
   local version_file
