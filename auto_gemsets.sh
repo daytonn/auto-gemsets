@@ -38,6 +38,7 @@ function set_default_gemset() {
       export GEM_PATH="${DEFAULT_GEMSET}"
       export GEMSET="daytonn"
       export GEMFILE="*default"
+      export PATH="$PATH:${DEFAULT_GEMSET}/bin"
       if [ -z "$GEMSET_PRELOAD" ]; then
         list_gemset
       fi
