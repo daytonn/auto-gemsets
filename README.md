@@ -17,7 +17,7 @@ Any `Gemfile` you encounter will cause auto-gemsets to automatically create and 
 The `gemset install` command will create a copy of `auto_gemsets.sh` into `/usr/local/share/auto_gemsets` To use auto-gemsets, you will need to source this file in your `~/.bashrc` (`~/.bash_profile` on OSX) or `~/.zshrc` file.
 
     source /usr/local/share/auto_gemsets/auto_gemsets.sh
-    
+
 That's it, reload your `.bashrc` (`source ~/.bashrc`) or open a new terminal and auto-gemsets will now be managing your ruby gems environment.
 
 ### Default Gemset:
@@ -26,11 +26,11 @@ If you wish to have certain gems available globally no matter what project you'r
 
     # auto-gemsets
     export DEFAULT_GEMSET="$HOME/.gemsets/$USER"
-    
+
 auto-gemsets will add this gemset to your `GEM_PATH` and add it's bin directory to your `PATH`. This gemset will always be active. When another gemset is also active, installed gems will automatically belong to that gemset. When _ONLY_ the default gemset is active, installed gems will belong to the default gemset.
 
 ## Command Line
 
 Although auto-gemsets focuses on automatic management of your gemsets, there are times when interaction is necessary. For these occaisions, auto-gemsets comes with a command line application named `gemset`.
 
-See the [HELP](https://github.com/daytonn/auto-gemsets/blob/master/HELP) file for `gemset`'s Documentation.
+See the [HELP](https://github.com/daytonn/auto-gemsets/blob/master/HELP.md) file for `gemset`'s Documentation.
