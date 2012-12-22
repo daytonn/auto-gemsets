@@ -6,7 +6,7 @@ the current and default gemset's gems.
     gemset [command]
 
 
-Commands
+Commands:
 ========
 
 ls, list
