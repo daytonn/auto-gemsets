@@ -1,11 +1,11 @@
-set_default_gemset() {
+ag_set_default_gemset() {
   if [ -n "${DEFAULT_GEMSET}" ]; then
     if [ ! "$GEM_PATH" == "${DEFAULT_GEMSET}" ]; then
       DEFAULT=$( basename $DEFAULT_GEMSET )
     fi
 
     if [ -n "$GEMSET" ] && [ ! "$GEMSET" == "$DEFAULT" ]; then
-      remove_path "${GEMSET_ROOT}/${GEMSET}/bin"
+      ag_remove_path "${GEMSET_ROOT}/${GEMSET}/bin"
     fi
 
     DEFAULT_BIN_PATH="${DEFAULT_GEMSET}/bin"
@@ -16,16 +16,16 @@ set_default_gemset() {
     export GEM_ROOT="$GEM_HOME"
     export GEM_PATH="$GEM_HOME"
 
-    add_path "$DEFAULT_BIN_PATH"
-    using_gemset_via "*default"
+    ag_add_path "$DEFAULT_BIN_PATH"
+    ag_using_gemset_via "*default"
   fi
 }
 
-using_gemset_via() {
+ag_using_gemset_via() {
   echo "Now using $GEMSET gemset via $1"
 }
 
-remove_path() {
+ag_remove_path() {
   NEW_PATH=""
   IFS=':' read -a PATHS <<< "$PATH"
   for p in "${PATHS[@]}"
@@ -41,7 +41,7 @@ remove_path() {
   export PATH="$NEW_PATH"
 }
 
-add_path () {
+ag_add_path () {
   if ! echo $PATH | egrep -q "(^|:)$1($|:)" ; then
      if [ "$2" = "after" ] ; then
         PATH=$PATH:$1
@@ -60,16 +60,16 @@ auto_gemsets() {
     GEMFILE="$dir/Gemfile"
 
     if [ -f "$GEMFILE" ]; then
-      get_parent_dirname
+      ag_get_parent_dirname
       if [ "$GEMSET" == "$PARENT_DIR" ]; then
         break
       else
-        set_gemset "$PARENT_DIR"
+        ag_set_gemset "$PARENT_DIR"
         break
       fi
     else
       if [ ! "$GEMSET" == "$DEFAULT" ]; then
-        set_default_gemset
+        ag_set_default_gemset
       fi
     fi
 
@@ -77,29 +77,29 @@ auto_gemsets() {
   done
 }
 
-get_parent_dirname() {
+ag_get_parent_dirname() {
   IFS='/' read -a gemfile_path_parts <<< "$GEMFILE"
   PARENT_DIR="${gemfile_path_parts[${#gemfile_path_parts[@]}-2]}"
 }
 
-set_gemset() {
+ag_set_gemset() {
   NEW_GEMSET="$1"
   NEW_GEMSET_PATH="${GEMSET_ROOT}/${1}"
   NEW_GEMSET_BIN_PATH="${NEW_GEMSET_PATH}/bin"
-  remove_path "$GEMSET_BIN_PATH"
-  create_gemset_if_missing "$NEW_GEMSET"
+  ag_remove_path "$GEMSET_BIN_PATH"
+  ag_create_gemset_if_missing "$NEW_GEMSET"
   export GEMSET="$NEW_GEMSET"
   export GEM_HOME="$NEW_GEMSET_PATH"
   export GEM_ROOT="$NEW_GEMSET_PATH"
   export GEM_PATH="$NEW_GEMSET_PATH:$DEFAULT_GEMSET"
 
-  add_path "$DEFAULT_BIN_PATH"
-  add_path "$NEW_GEMSET_BIN_PATH"
+  ag_add_path "$DEFAULT_BIN_PATH"
+  ag_add_path "$NEW_GEMSET_BIN_PATH"
 
-  using_gemset_via "$GEMFILE"
+  ag_using_gemset_via "$GEMFILE"
 }
 
-create_gemset_if_missing() {
+ag_create_gemset_if_missing() {
   if [ ! -d "${GEMSET_ROOT}/${1}" ]; then
     mkdir -p "${GEMSET_ROOT}/${1}" && echo "${1} created. run gem install bundler"
   fi
@@ -126,4 +126,4 @@ else
 fi
 
 # Set default when sourced
-set_default_gemset
+ag_set_default_gemset
