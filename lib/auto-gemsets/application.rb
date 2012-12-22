@@ -36,7 +36,13 @@ module AutoGemsets
       if @command
         self.send @command, *@args
       else
-        options[:help] ? help : self.send(:current)
+        if options[:help]
+          help
+        elsif options[:version]
+          version
+        else
+          self.send(:current)
+        end
       end
     end
 
@@ -139,7 +145,6 @@ module AutoGemsets
         OptionParser.new do |opts|
           opts.on("-v", "--version", "Version info") do
             @options[:version] = true
-            version
           end
 
           opts.on('-h', '--help', 'Display help') do
@@ -155,10 +160,7 @@ module AutoGemsets
       end
 
       def version
-        version = File.read("#{AutoGemsets::base_directory}/VERSION")
-        message = "auto-gemsets #{version}\n"
-        message << "Copyright (c) #{Time.now.year} Dayton Nolan\n"
-        @output.puts message
+        @output.puts "auto-gemsets #{AutoGemsets::VERSION}"
       end
 
       def gemset_path(gemset)
