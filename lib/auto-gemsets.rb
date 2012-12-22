@@ -3,7 +3,7 @@ module AutoGemsets
   GEMSET_ROOT = ENV['GEMSET_ROOT'] || File.join(ENV['HOME'], '.gemsets')
   INSTALL_ROOT = File.join('/', 'usr', 'local', 'share', 'auto_gemsets')
   VERSION = File.read "#{ROOT}/VERSION"
-  HELP = File.read "#{ROOT}/HELP"
+  HELP = File.read "#{ROOT}/HELP.md"
 
   def self.on_windows?
     (/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RUBY_PLATFORM) != nil
