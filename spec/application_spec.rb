@@ -130,4 +130,23 @@ describe AutoGemsets::Application do
 
   end
 
+  describe 'install' do
+
+    before do
+      @script_file = File.join('/', 'usr', 'local', 'share', 'auto_gemsets', 'auto_gemsets.sh')
+      FileUtils.mv(@script_file, "#{@script_file}.bak") if File.exists?(@script_file)
+    end
+
+    after do
+      FileUtils.mv("#{@script_file}.bak", @script_file) if File.exists?("#{@script_file}.bak")
+    end
+
+    it "copies the auto_gemsets script in the share directory" do
+      @app.install
+      script_file = File.join(AutoGemsets::ROOT, 'lib', 'auto-gemsets', 'auto_gemsets.sh')
+      expect(File.read(@script_file)).to eq(File.read(script_file))
+    end
+
+  end
+
 end

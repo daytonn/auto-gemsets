@@ -14,6 +14,10 @@ describe AutoGemsets do
     expect(AutoGemsets::GEMSET_ROOT).to eq(File.join(ENV['HOME'], '.gemsets'))
   end
 
+  it "has an INSTALL_ROOT" do
+    expect(AutoGemsets::INSTALL_ROOT).to eq('/usr/local/share/auto_gemsets')
+  end
+
   it "has a VERSION" do
     expect(AutoGemsets::VERSION).to match(/\d+\.\d+\.\d+/)
   end
