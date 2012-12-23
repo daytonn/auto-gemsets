@@ -105,6 +105,30 @@ ag_create_gemset_if_missing() {
   fi
 }
 
+ag_default() {
+  if [ -n "$1" ]; then
+    case "$1" in
+      "install" )
+        if [ -n "$2" ]; then
+          ag_default_install "$2"
+        else
+          echo "install requires a package name"
+          echo "ag_default install (package name)"
+        fi
+        ;;
+    esac
+  fi
+}
+
+ag_default_install() {
+  G="$GEMSET"
+  ag_set_default_gemset
+  if [ -n "$1" ]; then
+    gem install $1
+  fi
+  ag_set_gemset "$G"
+}
+
 # Create a GEMSET_ROOT if none is set
 if [ ! -n "$GEMSET_ROOT" ]; then
   export GEMSET_ROOT="${HOME}/.gemsets"
