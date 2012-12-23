@@ -3,7 +3,17 @@ it simply displays the current gemset in use.
 Note that the GEM environment includes both
 the current and default gemset's gems.
 
-    gemset [command]
+    gemset -h/--help
+    gemset -v/--version
+    gemset [command] [arguments...]
+
+Examples:
+--------
+    gemset list
+    gemset remove mygemset
+    gemset create mygemset
+    gemset rename mygemset awesome-gemset
+    gemset edit mygemset
 
 
 Commands:
