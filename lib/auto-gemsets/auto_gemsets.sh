@@ -118,39 +118,18 @@ ag_create_gemset_if_missing() {
   fi
 }
 
-default() {
-  if [ -n "$1" ] && [ "$1" == "gem" ]; then
-    case "$2" in
-      "install" )
-        if [ -n "$3" ]; then
-          ag_install_gem "$3"
-        fi
-      ;;
-      "uninstall" )
-      if [ -n "$3" ]; then
-        ag_remove_gem "$3"
-      fi
-      ;;
-    esac
-
+default-gem() {
+  if [ -n "$1" ] && [ -n "$2" ]; then
+    ag_silent "on"
+    G="$GEMSET"
+    ag_set_default_gemset
+    gem "$1" "$2"
+    ag_set_gemset "$G"
+    ag_silent "off"
   else
     echo "Usage:"
-    echo "default gem (command) [options]"
+    echo "default-gem (command) [options]"
   fi
-}
-
-ag_install_gem() {
-  G="$GEMSET"
-  ag_set_default_gemset
-  gem install "$1"
-  ag_set_gemset "$G"
-}
-
-ag_remove_gem() {
-  G="$GEMSET"
-  ag_set_default_gemset
-  gem uninstall "$1"
-  ag_set_gemset "$G"
 }
 
 # Create a GEMSET_ROOT if none is set
