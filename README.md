@@ -20,6 +20,8 @@ The `gemset init` command will create a copy of `auto_gemsets.sh` into `/usr/loc
 
 That's it, reload your `.bashrc` (`source ~/.bashrc`) or open a new terminal and auto-gemsets will now be managing your ruby gems environment.
 
+NOTE: If you've already installed `auto-gemsets` you will receive a warning asking you if you wish to overwrite this installation. You may want to do this after updating your `auto-gemsets` version
+
 ### Default Gemset:
 
 If you wish to have certain gems available globally no matter what project you're in, you may set a `DEFAULT_GEMSET` variable that points to a gemset directory that will be available no matter what specific project gemset is currently in use. To set a default gemset simply add the `DEFAULT_GEMSET` variable in your `.bashrc` or `.zshrc` file (it must be a valid path):
