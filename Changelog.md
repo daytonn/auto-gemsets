@@ -2,6 +2,8 @@
 
 ## Version 0.2.0
   - install command to copy script to /usr/local/share/auto_gemsets
+  - utility to install gems in the default gemset from anywhere
+  - utility to remove gems from the default gemset from anywhere
 
 ## Version 0.1.7
  - Fixed a bug where calling gemset with -v would error
