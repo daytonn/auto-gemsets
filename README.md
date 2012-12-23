@@ -10,11 +10,11 @@ Any `Gemfile` you encounter will cause auto-gemsets to automatically create and 
 ### Using RubyGems:
 
     gem install auto-gemsets
-    gemset install
+    gemset init
 
 ### Configuration:
 
-The `gemset install` command will create a copy of `auto_gemsets.sh` into `/usr/local/share/auto_gemsets` To use auto-gemsets, you will need to source this file in your `~/.bashrc` (`~/.bash_profile` on OSX) or `~/.zshrc` file.
+The `gemset init` command will create a copy of `auto_gemsets.sh` into `/usr/local/share/auto_gemsets` To use auto-gemsets, you will need to source this file in your `~/.bashrc` (`~/.bash_profile` on OSX) or `~/.zshrc` file.
 
     source /usr/local/share/auto_gemsets/auto_gemsets.sh
 
@@ -48,6 +48,6 @@ in the default* gemset from within other gemsets.
     default-gemset install rake
     default-gemset uninstall rake -v=10.0.1
     default-gemset list --local
-    
+
 `default-gemset` accepts any valid `gem` command, with any valid arguments and options.
 It is simply a pass-through to the `gem` command with the context of the default gemset.

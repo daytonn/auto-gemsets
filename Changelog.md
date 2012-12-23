@@ -1,7 +1,7 @@
 #Changelog
 
 ## Version 0.2.0
-  - install command to copy script to /usr/local/share/auto_gemsets
+  - init command to copy script to /usr/local/share/auto_gemsets
   - utility to install gems in the default gemset from anywhere
   - utility to remove gems from the default gemset from anywhere
 

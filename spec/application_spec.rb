@@ -130,7 +130,7 @@ describe AutoGemsets::Application do
 
   end
 
-  describe 'install' do
+  describe 'init' do
 
     before do
       @script_file = File.join('/', 'usr', 'local', 'share', 'auto_gemsets', 'auto_gemsets.sh')
@@ -142,7 +142,7 @@ describe AutoGemsets::Application do
     end
 
     it "copies the auto_gemsets script in the share directory" do
-      @app.install
+      @app.init
       script_file = File.join(AutoGemsets::ROOT, 'lib', 'auto-gemsets', 'auto_gemsets.sh')
       expect(File.read(@script_file)).to eq(File.read(script_file))
     end

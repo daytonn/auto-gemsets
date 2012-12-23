@@ -139,7 +139,7 @@ module AutoGemsets
       %x{#{ENV['EDITOR'] || ENV['TERM_EDITOR']} #{ENV['GEMFILE']}} if File.exists ENV['GEMFILE']
     end
 
-    def install
+    def init
       FileUtils.mkdir_p(AutoGemsets::INSTALL_ROOT) unless File.exists? AutoGemsets::INSTALL_ROOT
       script_file = File.join(AutoGemsets::ROOT, 'lib', 'auto-gemsets', 'auto_gemsets.sh')
       FileUtils.cp(script_file, AutoGemsets::INSTALL_ROOT)
