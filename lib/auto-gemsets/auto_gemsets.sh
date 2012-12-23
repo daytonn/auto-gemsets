@@ -118,7 +118,7 @@ ag_create_gemset_if_missing() {
   fi
 }
 
-default-gem() {
+default-gemset() {
   if [ -n "$1" ] && [ -n "$2" ]; then
     ag_silent "on"
     G="$GEMSET"
@@ -128,7 +128,7 @@ default-gem() {
     ag_silent "off"
   else
     echo "Usage:"
-    echo "default-gem (command) [options]"
+    echo "default-gemset (command) [options]"
   fi
 }
 
