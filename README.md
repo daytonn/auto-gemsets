@@ -34,3 +34,20 @@ auto-gemsets will add this gemset to your `GEM_PATH` and add it's bin directory 
 Although auto-gemsets focuses on automatic management of your gemsets, there are times when interaction is necessary. For these occaisions, auto-gemsets comes with a command line application named `gemset`.
 
 See the [HELP](https://github.com/daytonn/auto-gemsets/blob/master/HELP.md) file for `gemset`'s Documentation.
+
+## default-gemset
+The defalt-gemset command is an auto-gems utility to manage gems
+in the default* gemset from within other gemsets.
+
+### Usage:
+
+    default-gemset (command) [options]
+
+### Examples:
+
+    default-gemset install rake
+    default-gemset uninstall rake -v=10.0.1
+    default-gemset list --local
+    
+`default-gemset` accepts any valid `gem` command, with any valid arguments and options.
+It is simply a pass-through to the `gem` command with the context of the default gemset.

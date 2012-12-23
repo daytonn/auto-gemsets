@@ -143,6 +143,8 @@ Examples:
   default-gemset uninstall mygem
   default-gemset list
 
+`default-gemset` accepts any valid `gem` command, with any valid arguments and options.
+It is simply a pass-through to the `gem` command with the context of the default gemset.
 EOF
 
   fi
