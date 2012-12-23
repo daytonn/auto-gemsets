@@ -1,3 +1,14 @@
+SILENT="off"
+
+ag_silent() {
+  if [ -n "$1" ] && [ "$1" == "on" ]; then
+    SILENT="on"
+  else
+    SILENT="off"
+  fi
+
+}
+
 ag_set_default_gemset() {
   if [ -n "${DEFAULT_GEMSET}" ]; then
     if [ ! "$GEM_PATH" == "${DEFAULT_GEMSET}" ]; then
@@ -22,7 +33,9 @@ ag_set_default_gemset() {
 }
 
 ag_using_gemset_via() {
-  echo "Now using $GEMSET gemset via $1"
+  if [ "$SILENT" == "off" ]; then
+    echo "Now using $GEMSET gemset via $1"
+  fi
 }
 
 ag_remove_path() {
@@ -161,4 +174,6 @@ else
 fi
 
 # Set default when sourced
+ag_silent "on"
 ag_set_default_gemset
+ag_silent "off"
