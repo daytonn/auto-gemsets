@@ -8,13 +8,14 @@ the current and default gemset's gems.
     gemset [command] [arguments...]
 
 Examples:
---------
+---------
     gemset list
     gemset remove mygemset
     gemset create mygemset
     gemset rename mygemset awesome-gemset
     gemset edit mygemset
-
+    gemset help
+    gemset version
 
 Commands:
 ========
