@@ -119,16 +119,32 @@ ag_create_gemset_if_missing() {
 }
 
 default-gemset() {
-  if [ -n "$1" ] && [ -n "$2" ]; then
+  if [ -n "$1" ]; then
     ag_silent "on"
     G="$GEMSET"
     ag_set_default_gemset
-    gem "$1" "$2"
+    gem "$@"
     ag_set_gemset "$G"
     ag_silent "off"
   else
-    echo "Usage:"
-    echo "default-gemset (command) [options]"
+    cat <<EOF
+The defalt-gemset command is an auto-gems utility to manage gems
+in the default* gemset from within other gemsets.
+
+Usage:
+------
+
+  default-gemset (command) [options]
+
+Examples:
+---------
+
+  default-gemset install mygem
+  default-gemset uninstall mygem
+  default-gemset list
+
+EOF
+
   fi
 }
 
