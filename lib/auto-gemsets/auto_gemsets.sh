@@ -120,13 +120,18 @@ ag_default() {
   fi
 }
 
-ag_default_install() {
-  G="$GEMSET"
-  ag_set_default_gemset
-  if [ -n "$1" ]; then
-    gem install $1
+default() {
+  if [ -n "$1" ] && [ "$1" == "gem" ] &&
+     [ -n "$2" ] && [ "$2" == "install" ] &&
+     [ -n "$3" ]; then
+    G="$GEMSET"
+    ag_set_default_gemset
+    gem install "$3"
+    ag_set_gemset "$G"
+  else
+    echo "Usage:"
+    echo "default gem install (gem)"
   fi
-  ag_set_gemset "$G"
 }
 
 # Create a GEMSET_ROOT if none is set
