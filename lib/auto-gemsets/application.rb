@@ -86,7 +86,7 @@ module AutoGemsets
         @output.puts "#{new_gemset} already exists!"
         @output.puts "Do you really wish to replace #{new_gemset} with #{gemset}? y/n"
 
-        confirmation = @input.gets.chomp
+        confirmation = @input.gets
         if confirmation =~ /^y/i
           FileUtils.rm_rf(gemset_path(new_gemset))
           if FileUtils.mv(gemset_path(gemset), gemset_path(new_gemset))
@@ -104,7 +104,7 @@ module AutoGemsets
 
     def rm(gemset)
       @output.puts "Are you sure you wish to delete the #{gemset} gemset? y/n"
-      confirmation = @input.gets.chomp
+      confirmation = @input.gets
       if confirmation =~ /^y/i
         if File.exists?(gemset_path(gemset)) && FileUtils.rm_rf(gemset_path(gemset))
           @output.puts "#{gemset} gemset removed!"
@@ -142,6 +142,16 @@ module AutoGemsets
     def init
       FileUtils.mkdir_p(AutoGemsets::INSTALL_ROOT) unless File.exists? AutoGemsets::INSTALL_ROOT
       script_file = File.join(AutoGemsets::ROOT, 'lib', 'auto-gemsets', 'auto_gemsets.sh')
+      if File.exists? script_file
+        @output.puts "auto-gemsets is already installed!"
+        @output.puts "Do you wish overwrite this installation? y/n"
+        confirmation = @input.gets
+        if confirmation =~ /^y/i
+
+        else
+          @output.puts "Existing installation preserved."
+        end
+      end
       FileUtils.cp(script_file, AutoGemsets::INSTALL_ROOT)
       FileUtils.chmod("a+x", "#{AutoGemsets::INSTALL_ROOT}/auto_gemsets.sh")
     end

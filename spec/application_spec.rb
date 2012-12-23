@@ -138,6 +138,7 @@ describe AutoGemsets::Application do
     end
 
     after do
+      FileUtils.rm_rf(@script_file) if File.exists?(@script_file)
       FileUtils.mv("#{@script_file}.bak", @script_file) if File.exists?("#{@script_file}.bak")
     end
 
@@ -145,6 +146,24 @@ describe AutoGemsets::Application do
       @app.init
       script_file = File.join(AutoGemsets::ROOT, 'lib', 'auto-gemsets', 'auto_gemsets.sh')
       expect(File.read(@script_file)).to eq(File.read(script_file))
+    end
+
+    it "warns if the script is already loaded and does nothing when y is not pressed" do
+      FileUtils.touch @script_file
+      @output.should_receive(:puts).once.with("auto-gemsets is already installed!")
+      @output.should_receive(:puts).once.with("Do you wish overwrite this installation? y/n")
+      @output.should_receive(:puts).once.with("Existing installation preserved.")
+      @input.stub!(:gets).and_return("n")
+      @app.init
+    end
+
+    it "warns if the script is already loaded and overwrites it when y is pressed" do
+      FileUtils.touch @script_file
+      @output.should_receive(:puts).once.with("auto-gemsets is already installed!")
+      @output.should_receive(:puts).once.with("Do you wish overwrite this installation? y/n")
+      @input.stub!(:gets).and_return("y")
+      @app.init
+      expect(File.read(@script_file)).to eq(File.read(File.join(AutoGemsets::INSTALL_ROOT, 'auto_gemsets.sh')))
     end
 
   end
