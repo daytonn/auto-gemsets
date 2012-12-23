@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "auto-gemsets"
-  s.version = "0.1.7"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Dayton Nolan"]
-  s.date = "2012-12-22"
+  s.date = "2012-12-23"
   s.description = "auto-gemsets creates a gemset named after the parent directory of every Gemfile you encounter. This let's you automatically scope your gems without using shims or creating gemsets. "
   s.email = "dnolan@gmail.com"
   s.executables = ["gemset"]
@@ -21,16 +21,16 @@ Gem::Specification.new do |s|
     "Changelog.md",
     "Gemfile",
     "Gemfile.lock",
-    "HELP",
+    "HELP.md",
     "LICENSE",
     "README.md",
     "Rakefile",
     "VERSION",
     "auto-gemsets.gemspec",
-    "auto_gemsets.sh",
     "bin/gemset",
     "lib/auto-gemsets.rb",
     "lib/auto-gemsets/application.rb",
+    "lib/auto-gemsets/auto_gemsets.sh",
     "spec/application_spec.rb",
     "spec/auto-gemsets_spec.rb",
     "spec/spec_helper.rb"
