@@ -32,17 +32,7 @@ module AutoGemsets
     end
 
     def run
-      if @command
-        self.send @command, *@args
-      else
-        if options[:help]
-          help
-        elsif options[:version]
-          version
-        else
-          self.send(:current)
-        end
-      end
+      self.send @command, *@args
     end
 
     def ls
