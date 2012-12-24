@@ -20,6 +20,10 @@ Examples:
 Commands:
 ========
 
+init
+----
+This command will copy the auto_gemsets.sh script into the `/usr/local/share/auto_gemsets` folder. This is the small shell script that does the automatic switching for you. Once this file is in place, simply `source` it somewhere in your profile and auto-gemsets will be activated.
+
 ls, list
 --------
     gemset ls
