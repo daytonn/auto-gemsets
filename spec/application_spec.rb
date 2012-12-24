@@ -10,22 +10,19 @@ describe AutoGemsets::Application do
     @gemset = SecureRandom::hex
     @random_gemset = File.join(ENV['HOME'], '.gemsets', @gemset)
     FileUtils.mkdir_p(@random_gemset)
+    @env_gemset = ENV['GEMSET']
+    @env_default_gemset = ENV['DEFAULT_GEMSET']
+    ENV['DEFAULT_GEMSET'] = 'mygemset'
+    ENV['GEMSET'] = @gemset
   end
 
   after do
     FileUtils.rm_rf(@random_gemset) if File.exists? @random_gemset
+    ENV['GEMSET'] = @env_gemset
+    ENV['DEFAULT_GEMSET'] = @env_default_gemset
   end
 
   describe 'current' do
-    before do
-      @env_gemset = ENV['GEMSET']
-      ENV['GEMSET'] = @gemset
-    end
-
-    after do
-      ENV['GEMSET'] = @env_gemset
-    end
-
     it "shows the current gemset" do
       @output.should_receive(:puts).with("-> #{@gemset}")
       @app.current
