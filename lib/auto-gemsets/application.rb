@@ -21,8 +21,7 @@ module AutoGemsets
       @output = output
       @input = input
       @args = args
-      @command = @args.shift.to_sym unless @args.empty? || @args.first =~ /^-/
-
+      @command = @args.empty? ? :current : @args.shift.to_sym unless @args.first =~ /^-/
       parse_options
     end
 
@@ -47,19 +46,7 @@ module AutoGemsets
     end
 
     def ls
-      gemsets = Dir.glob(File.join(ENV['HOME'], '.gemsets', '*')).map do |d|
-        gemset = File.basename(d)
-        case gemset
-        when default_gemset
-          gemset = "   #{gemset}*"
-        when ENV['GEMSET']
-          gemset = "-> #{gemset}"
-        else
-          gemset = "   #{gemset}"
-        end
-        gemset
-      end
-
+      gemsets = Dir.glob(File.join(ENV['HOME'], '.gemsets', '*')).map { |d| display_gemset d }
       @output.puts gemsets.join "\n"
     end
 
@@ -162,10 +149,12 @@ module AutoGemsets
         OptionParser.new do |opts|
           opts.on("-v", "--version", "Version info") do
             @options[:version] = true
+            @command = :version
           end
 
           opts.on('-h', '--help', 'Display help') do
             @options[:help] = true
+            @command = :help
           end
         end.parse!
 
@@ -186,6 +175,18 @@ module AutoGemsets
 
       def default_gemset
         File.basename(ENV['DEFAULT_GEMSET'])
+      end
+
+      def display_gemset(gemset_dir)
+        case gemset = File.basename(gemset_dir)
+        when default_gemset
+          gemset = "   #{gemset}*"
+        when ENV['GEMSET']
+          gemset = "-> #{gemset}"
+        else
+          gemset = "   #{gemset}"
+        end
+        gemset
       end
   end
 
