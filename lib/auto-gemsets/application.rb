@@ -55,23 +55,20 @@ module AutoGemsets
     end
 
     def mv(gemset, new_gemset)
-      if !File.exists?(gemset_path(new_gemset))
-        if FileUtils.mv(gemset_path(gemset), gemset_path(new_gemset))
-          @output.puts "#{gemset} renamed to #{new_gemset}"
-        end
+      if !File.exists?(gemset_path(new_gemset)) && FileUtils.mv(gemset_path(gemset), gemset_path(new_gemset))
+        @output.puts "#{gemset} renamed to #{new_gemset}"
       else
         @output.puts "#{new_gemset} already exists!"
-        @output.puts "Do you really wish to replace #{new_gemset} with #{gemset}? y/n"
-
-        confirmation = @input.gets
-        if confirmation =~ /^y/i
-          FileUtils.rm_rf(gemset_path(new_gemset))
-          if FileUtils.mv(gemset_path(gemset), gemset_path(new_gemset))
-            @output.puts "#{gemset} renamed to #{new_gemset}"
-          end
-        else
-          @output.puts "No gemsets were harmed."
-        end
+        confirm("Do you really wish to replace #{new_gemset} with #{gemset}?", {
+          accept: -> {
+            if FileUtils.rm_rf(gemset_path(new_gemset)) && FileUtils.mv(gemset_path(gemset), gemset_path(new_gemset))
+              @output.puts "#{gemset} renamed to #{new_gemset}"
+            end
+          },
+          deny: -> {
+            @output.puts "No gemsets were harmed."
+          }
+        })
       end
     end
 
@@ -80,34 +77,37 @@ module AutoGemsets
     end
 
     def rm(gemset)
-      @output.puts "Are you sure you wish to delete the #{gemset} gemset? y/n"
-      confirmation = @input.gets
-      if confirmation =~ /^y/i
-        if File.exists?(gemset_path(gemset)) && FileUtils.rm_rf(gemset_path(gemset))
-          @output.puts "#{gemset} gemset removed!"
-        end
-      else
-        @output.puts "No gemsets were harmed."
-      end
+      confirm("Are you sure you wish to delete the #{gemset} gemset?", {
+        accept: -> {
+          if File.exists?(gemset_path(gemset)) && FileUtils.rm_rf(gemset_path(gemset))
+            @output.puts "#{gemset} gemset removed!"
+          end
+        },
+        deny: -> {
+          @output.puts "No gemsets were harmed."
+        }
+      })
     end
 
     def remove(gemset)
       rm(gemset)
     end
 
-    def open(gemset=nil)
-      if AutoGemsets::on_OSX?
-        if gemset
-          if File.exists?(gemset_path(gemset))
-            %x{open #{gemset_path(gemset)}}
-          else
-            @output.puts "No gemset named #{gemset}!"
-          end
-        else
-          %x{open #{AutoGemsets::GEMSET_ROOT}}
-        end
+    def open(gemset = nil)
+      command = case
+      when AutoGemsets::on_OSX?
+        'open'
+      when AutoGemsets::on_linux?
+        'xdg-open'
+      when AutoGemsets::on_windows?
+        'explorer'
+      end
+
+      if gemset
+        %x{#{command} #{gemset_path(gemset)}} if File.exists?(gemset_path(gemset))
+        @output.puts "No gemset named #{gemset}!" unless File.exists?(gemset_path(gemset))
       else
-        @output.puts "currently this command is only available for OS X users"
+        %x{#{command} #{AutoGemsets::GEMSET_ROOT}}
       end
     end
 
@@ -117,20 +117,19 @@ module AutoGemsets
     end
 
     def init
-      FileUtils.mkdir_p(AutoGemsets::INSTALL_ROOT) unless File.exists? AutoGemsets::INSTALL_ROOT
-      script_file = File.join(AutoGemsets::ROOT, 'lib', 'auto-gemsets', 'auto_gemsets.sh')
       if File.exists? script_file
         @output.puts "auto-gemsets is already installed!"
-        @output.puts "Do you wish overwrite this installation? y/n"
-        confirmation = @input.gets
-        if confirmation =~ /^y/i
-
-        else
-          @output.puts "Existing installation preserved."
-        end
+        confirm("Do you wish overwrite this installation?", {
+          accept: -> {
+            create_script
+          },
+          deny: -> {
+            @output.puts "Existing installation preserved."
+          }
+        })
+      else
+        create_script
       end
-      FileUtils.cp(script_file, AutoGemsets::INSTALL_ROOT)
-      FileUtils.chmod("a+x", "#{AutoGemsets::INSTALL_ROOT}/auto_gemsets.sh")
     end
 
     private
@@ -177,6 +176,26 @@ module AutoGemsets
           gemset = "   #{gemset}"
         end
         gemset
+      end
+
+      def confirm(question, callbacks = {})
+        settings = {
+          accept: -> { nil },
+          deny: -> { nil }
+        }.merge! callbacks
+
+        @output.puts "#{question} y/n"
+        @input.gets =~ /^y/i ? settings[:accept].call : settings[:deny].call
+      end
+
+      def script_file
+        File.join(AutoGemsets::INSTALL_ROOT, "auto_gemsets.sh")
+      end
+
+      def create_script
+        FileUtils.mkdir_p(AutoGemsets::INSTALL_ROOT) unless File.exists? AutoGemsets::INSTALL_ROOT
+        FileUtils.cp(File.join(AutoGemsets::ROOT, 'lib', 'auto-gemsets', 'auto_gemsets.sh'), AutoGemsets::INSTALL_ROOT)
+        FileUtils.chmod("a+x", File.join(AutoGemsets::INSTALL_ROOT, File.basename(script_file)))
       end
   end
 
