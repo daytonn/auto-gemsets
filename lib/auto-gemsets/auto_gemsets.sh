@@ -71,28 +71,32 @@ auto_gemsets() {
 
   until [[ -z "$dir" ]]; do
     GEMFILE="$dir/Gemfile"
+    ag_get_parent_dirname
+
+    if [ "$GEMSET" == "$PARENT_DIR" ]; then
+      break
+    fi
 
     if [ -f "$GEMFILE" ]; then
-      ag_get_parent_dirname
-      if [ "$GEMSET" == "$PARENT_DIR" ]; then
-        break
-      else
-        ag_set_gemset "$PARENT_DIR"
-        break
-      fi
-    else
-      if [ ! "$GEMSET" == "$DEFAULT" ]; then
-        ag_set_default_gemset
-      fi
+      ag_set_gemset "$PARENT_DIR"
+      break
+    fi
+
+    if [ -z "${dir%/*}" ] && [ ! "$GEMSET" == $( basename $DEFAULT_GEMSET ) ]; then
+      ag_set_default_gemset
+      break
     fi
 
     dir="${dir%/*}"
   done
+
 }
 
 ag_get_parent_dirname() {
-  IFS='/' read -a gemfile_path_parts <<< "$GEMFILE"
-  PARENT_DIR="${gemfile_path_parts[${#gemfile_path_parts[@]}-2]}"
+  if [ ! -z "$GEMFILE" ]; then
+    IFS='/' read -a gemfile_path_parts <<< "$GEMFILE"
+    PARENT_DIR="${gemfile_path_parts[${#gemfile_path_parts[@]}-2]}"
+  fi
 }
 
 ag_set_gemset() {
@@ -162,15 +166,10 @@ else
   # If there's already a prompt command,
   if [ -n "$PROMPT_COMMAND" ]; then
     # check if it's already in the PROMPT
-    if [ ! "$PROMPT_COMMAND" == *auto_gemsets* ]; then
+    if [ -z "$(echo $PROMPT_COMMAND | grep auto_gemsets)" ] ; then
       PROMPT_COMMAND="$PROMPT_COMMAND; auto_gemsets"
     fi
   else
     PROMPT_COMMAND="auto_gemsets"
   fi
 fi
-
-# Set default when sourced
-ag_silent "on"
-ag_set_default_gemset
-ag_silent "off"
