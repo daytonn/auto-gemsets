@@ -117,7 +117,7 @@ module AutoGemsets
     end
 
     def init
-      if File.exists? script_file
+      if File.exists? "/usr/local/share/auto_gemsets/auto_gemsets.sh"
         @output.puts "auto-gemsets is already installed!"
         confirm("Do you wish overwrite this installation?", {
           accept: -> {
