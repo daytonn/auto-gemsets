@@ -29,6 +29,9 @@ ag_set_default_gemset() {
 
     ag_add_path "$DEFAULT_BIN_PATH"
     ag_using_gemset_via "*default"
+  else
+    export DEFAULT_GEMSET="$HOME/.gemsets/$USER"
+    ag_set_default_gemset
   fi
 }
 
