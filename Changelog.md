@@ -1,5 +1,9 @@
 #Changelog
 
+## Version 0.3.0
+  - No longer setting the auto_gemsets.sh file as executable
+  - Change `default-gemsets` to `default-gems`
+
 ## Version 0.2.1
   - add `init` command
 
