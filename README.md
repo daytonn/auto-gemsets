@@ -24,10 +24,10 @@ NOTE: If you've already installed `auto-gemsets` you will receive a warning aski
 
 ### Default Gemset:
 
-If you wish to have certain gems available globally no matter what project you're in, you may set a `DEFAULT_GEMSET` variable that points to a gemset directory that will be available no matter what specific project gemset is currently in use. To set a default gemset simply add the `DEFAULT_GEMSET` variable in your `.bashrc` or `.zshrc` file (it must be a valid path):
+A default gemset will be created for you based on your username. Given a username of `daytonn` on an OS X machine, the default gemset path would be `/Users/daytonn/.gemsets/daytonn`. If you wish to override this setting simply set the `DEFAULT_GEMSET` variable somewhere in your `.bashrc`, `.bash_profile`, or `.zshrc` depending on your environment:
 
     # auto-gemsets
-    export DEFAULT_GEMSET="$HOME/.gemsets/$USER"
+    export DEFAULT_GEMSET="/custom/path/to/default_gemset"
 
 auto-gemsets will add this gemset to your `GEM_PATH` and add it's bin directory to your `PATH`. This gemset will always be active. When another gemset is also active, installed gems will automatically belong to that gemset. When _ONLY_ the default gemset is active, installed gems will belong to the default gemset.
 
