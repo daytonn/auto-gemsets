@@ -1,6 +1,6 @@
 #Changelog
 
-## Version 0.3.1
+## Version 0.3.1 (unreleased)
   - Create default gemset if one does not exist
 
 ## Version 0.3.0
