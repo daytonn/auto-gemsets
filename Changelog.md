@@ -1,7 +1,7 @@
 #Changelog
 
 ## Version 0.3.1
-  - Creat default gemset if one does not exist
+  - Create default gemset if one does not exist
 
 ## Version 0.3.0
   - No longer setting the auto_gemsets.sh file as executable
