@@ -195,7 +195,6 @@ module AutoGemsets
       def create_script
         FileUtils.mkdir_p(AutoGemsets::INSTALL_ROOT) unless File.exists? AutoGemsets::INSTALL_ROOT
         FileUtils.cp(File.join(AutoGemsets::ROOT, 'lib', 'auto-gemsets', 'auto_gemsets.sh'), AutoGemsets::INSTALL_ROOT)
-        FileUtils.chmod("a+x", File.join(AutoGemsets::INSTALL_ROOT, File.basename(script_file)))
       end
   end
 
