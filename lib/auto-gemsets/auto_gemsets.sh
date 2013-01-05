@@ -1,10 +1,10 @@
-SILENT="off"
+AG_SILENT="off"
 
 ag_silent() {
   if [ -n "$1" ] && [ "$1" == "on" ]; then
-    SILENT="on"
+    AG_SILENT="on"
   else
-    SILENT="off"
+    AG_SILENT="off"
   fi
 
 }
@@ -33,7 +33,7 @@ ag_set_default_gemset() {
 }
 
 ag_using_gemset_via() {
-  if [ "$SILENT" == "off" ]; then
+  if [ "$AG_SILENT" == "off" ]; then
     echo "Now using $GEMSET gemset via $1"
   fi
 }
