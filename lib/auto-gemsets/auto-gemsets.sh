@@ -1,4 +1,4 @@
-function ag_init() {
+ag_init() {
   export GEMSET_ROOT="$HOME/.gemsets"
 
   if [ -z "${DEFAULT_GEMSET}" ]; then
@@ -21,7 +21,7 @@ function ag_init() {
   fi
 }
 
-function ag_set_gemset() {
+ag_set_gemset() {
   if [ "$GEMSET" == "$1" ]; then
     return;
   fi
@@ -41,7 +41,7 @@ function ag_set_gemset() {
 
 }
 
-function ag_remove_path() {
+ag_remove_path() {
   CLEAN_PATH=""
   IFS=':' read -a PATHS <<< "$PATH"
   # Rip through paths and build a new path without the directory
@@ -60,17 +60,17 @@ function ag_remove_path() {
   export PATH="$CLEAN_PATH"
 }
 
-function ag_using_gemset_via() {
+ag_using_gemset_via() {
   echo "Now using $GEMSET gemset via $1"
 }
 
-function ag_add_path () {
+ag_add_path() {
   if ! echo $PATH | egrep -q "(^|:)$1($|:)" ; then
      export PATH="$1:$PATH"
   fi
 }
 
-function ag_parent_dir() {
+ag_parent_dir() {
   if [ ! -z "$1" ]; then
     IFS='/' read -a path_parts <<< "$1"
     echo "${path_parts[${#path_parts[@]}-2]}"
@@ -79,7 +79,7 @@ function ag_parent_dir() {
   fi
 }
 
-function auto_gemsets() {
+auto_gemsets() {
   local dir="$PWD"
 
   until [[ -z "$dir" ]]; do
@@ -102,7 +102,7 @@ function auto_gemsets() {
   done
 }
 
-function ag_create_gemset_if_missing() {
+ag_create_gemset_if_missing() {
   if [ ! -d "${GEMSET_ROOT}/${1}" ]; then
     mkdir -p "${GEMSET_ROOT}/${1}" && echo "${1} gemset created. run gem install bundler"
   fi

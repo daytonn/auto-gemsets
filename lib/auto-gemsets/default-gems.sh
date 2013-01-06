@@ -1,4 +1,4 @@
-function default-gems() {
+default-gems() {
   if [ -z "$1" ]; then
     cat <<EOF
 The defalt-gems command is an auto-gems utility to manage gems
