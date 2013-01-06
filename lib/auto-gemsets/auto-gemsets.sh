@@ -104,8 +104,9 @@ function auto_gemsets() {
 
 function ag_create_gemset_if_missing() {
   if [ ! -d "${GEMSET_ROOT}/${1}" ]; then
-    mkdir -p "${GEMSET_ROOT}/${1}" && echo "${1} created. run gem install bundler"
+    mkdir -p "${GEMSET_ROOT}/${1}" && echo "${1} gemset created. run gem install bundler"
   fi
 }
 
+# Kick it
 ag_init
