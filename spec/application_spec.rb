@@ -130,23 +130,30 @@ describe AutoGemsets::Application do
   describe 'init' do
 
     before do
-      @script_file = File.join('/', 'usr', 'local', 'share', 'auto_gemsets', 'auto-gemsets.sh')
-      FileUtils.mv(@script_file, "#{@script_file}.bak") if File.exists?(@script_file)
+      @scripts = {
+        auto_gemsets: File.join('/', 'usr', 'local', 'share', 'auto-gemsets', 'auto-gemsets.sh'),
+        default_gems: File.join('/', 'usr', 'local', 'share', 'auto-gemsets', 'default-gems.sh')
+      }
+      FileUtils.mv(@scripts[:auto_gemsets], "#{@scripts[:auto_gemsets]}.bak") if File.exists?(@scripts[:auto_gemsets])
+      FileUtils.mv(@scripts[:default_gems], "#{@scripts[:default_gems]}.bak") if File.exists?(@scripts[:default_gems])
     end
 
     after do
-      FileUtils.rm_rf(@script_file) if File.exists?(@script_file)
-      FileUtils.mv("#{@script_file}.bak", @script_file) if File.exists?("#{@script_file}.bak")
+      FileUtils.rm_rf(@scripts[:auto_gemsets]) if File.exists?(@scripts[:auto_gemsets])
+      FileUtils.mv("#{@scripts[:auto_gemsets]}.bak", @scripts[:auto_gemsets]) if File.exists?("#{@scripts[:auto_gemsets]}.bak")
+
+      FileUtils.rm_rf(@scripts[:default_gems]) if File.exists?(@scripts[:default_gems])
+      FileUtils.mv("#{@scripts[:default_gems]}.bak", @scripts[:default_gems]) if File.exists?("#{@scripts[:default_gems]}.bak")
     end
 
-    it "copies the auto_gemsets script in the share directory" do
+    it "copies the auto-gemsets script in the share directory" do
       @app.init
       script_file = File.join(AutoGemsets::ROOT, 'lib', 'auto-gemsets', 'auto-gemsets.sh')
-      expect(File.read(@script_file)).to eq(File.read(script_file))
+      expect(File.read(@scripts[:auto_gemsets])).to eq(File.read(script_file))
     end
 
     it "warns if the script is already loaded and does nothing when y is not pressed" do
-      FileUtils.touch @script_file
+      FileUtils.touch @scripts[:auto_gemsets]
       @output.should_receive(:puts).once.with("auto-gemsets is already installed!")
       @output.should_receive(:puts).once.with("Do you wish overwrite this installation? y/n")
       @output.should_receive(:puts).once.with("Existing installation preserved.")
@@ -155,12 +162,18 @@ describe AutoGemsets::Application do
     end
 
     it "warns if the script is already loaded and overwrites it when y is pressed" do
-      FileUtils.touch @script_file
+      FileUtils.touch @scripts[:auto_gemsets]
       @output.should_receive(:puts).once.with("auto-gemsets is already installed!")
       @output.should_receive(:puts).once.with("Do you wish overwrite this installation? y/n")
       @input.stub!(:gets).and_return("y")
       @app.init
-      expect(File.read(@script_file)).to eq(File.read(File.join(AutoGemsets::INSTALL_ROOT, 'auto-gemsets.sh')))
+      expect(File.read(@scripts[:auto_gemsets])).to eq(File.read(File.join(AutoGemsets::INSTALL_ROOT, 'auto-gemsets.sh')))
+    end
+
+    it "copies the default-gems script in the share directory" do
+      @app.init
+      default_gems_file = File.join(AutoGemsets::ROOT, 'lib', 'auto-gemsets', 'default-gems.sh')
+      expect(File.read(@scripts[:default_gems])).to eq(File.read(default_gems_file))
     end
 
   end

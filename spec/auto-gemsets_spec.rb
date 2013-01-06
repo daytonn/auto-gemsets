@@ -15,7 +15,7 @@ describe AutoGemsets do
   end
 
   it "has an INSTALL_ROOT" do
-    expect(AutoGemsets::INSTALL_ROOT).to eq('/usr/local/share/auto_gemsets')
+    expect(AutoGemsets::INSTALL_ROOT).to eq('/usr/local/share/auto-gemsets')
   end
 
   it "has a VERSION" do

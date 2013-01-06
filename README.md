@@ -14,9 +14,9 @@ Any `Gemfile` you encounter will cause auto-gemsets to automatically create and 
 
 ### Configuration:
 
-The `gemset init` command will create a copy of `auto-gemsets.sh` into `/usr/local/share/auto_gemsets` To use auto-gemsets, you will need to source this file in your `~/.bashrc` (`~/.bash_profile` on OSX) or `~/.zshrc` file.
+The `gemset init` command will create a copy of `auto-gemsets.sh` into `/usr/local/share/auto-gemsets` To use auto-gemsets, you will need to source this file in your `~/.bashrc` (`~/.bash_profile` on OSX) or `~/.zshrc` file.
 
-    source /usr/local/share/auto_gemsets/auto-gemsets.sh
+    source /usr/local/share/auto-gemsets/auto-gemsets.sh
 
 That's it, reload your `.bashrc` (`source ~/.bashrc`) or open a new terminal and auto-gemsets will now be managing your ruby gems environment.
 

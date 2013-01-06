@@ -1,7 +1,7 @@
 module AutoGemsets
   ROOT = File.expand_path(File.join(File.dirname(__FILE__), '..'))
   GEMSET_ROOT = ENV['GEMSET_ROOT'] || File.join(ENV['HOME'], '.gemsets')
-  INSTALL_ROOT = File.join('/', 'usr', 'local', 'share', 'auto_gemsets')
+  INSTALL_ROOT = File.join('/', 'usr', 'local', 'share', 'auto-gemsets')
   VERSION = File.read "#{ROOT}/VERSION"
   HELP = File.read "#{ROOT}/HELP.md"
 

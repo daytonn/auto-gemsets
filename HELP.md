@@ -22,7 +22,7 @@ Commands:
 
 init
 ----
-This command will copy the auto-gemsets.sh script into the `/usr/local/share/auto_gemsets` folder. This is the small shell script that does the automatic switching for you. Once this file is in place, simply `source` it somewhere in your profile and auto-gemsets will be activated.
+This command will copy the auto-gemsets.sh script into the `/usr/local/share/auto-gemsets` folder. This is the small shell script that does the automatic switching for you. Once this file is in place, simply `source` it somewhere in your profile and auto-gemsets will be activated.
 
 ls, list
 --------

@@ -117,19 +117,8 @@ module AutoGemsets
     end
 
     def init
-      if File.exists? script_file
-        @output.puts "auto-gemsets is already installed!"
-        confirm("Do you wish overwrite this installation?", {
-          accept: -> {
-            create_script
-          },
-          deny: -> {
-            @output.puts "Existing installation preserved."
-          }
-        })
-      else
-        create_script
-      end
+      create_auto_gemsets_script_if_nonexistent
+      create_default_gems_script_if_nonexistent
     end
 
     private
@@ -192,9 +181,45 @@ module AutoGemsets
         File.join(AutoGemsets::INSTALL_ROOT, "auto-gemsets.sh")
       end
 
-      def create_script
+      def default_gems_file
+        File.join(AutoGemsets::INSTALL_ROOT, "default-gems.sh")
+      end
+
+      def create_script(script)
         FileUtils.mkdir_p(AutoGemsets::INSTALL_ROOT) unless File.exists? AutoGemsets::INSTALL_ROOT
-        FileUtils.cp(File.join(AutoGemsets::ROOT, 'lib', 'auto-gemsets', 'auto-gemsets.sh'), AutoGemsets::INSTALL_ROOT)
+        FileUtils.cp(File.join(AutoGemsets::ROOT, 'lib', 'auto-gemsets', script), AutoGemsets::INSTALL_ROOT)
+      end
+
+      def create_auto_gemsets_script_if_nonexistent
+        if File.exists? script_file
+          @output.puts "auto-gemsets is already installed!"
+          confirm("Do you wish overwrite this installation?", {
+            accept: -> {
+              create_script 'auto-gemsets.sh'
+            },
+            deny: -> {
+              @output.puts "Existing installation preserved."
+            }
+          })
+        else
+          create_script 'auto-gemsets.sh'
+        end
+      end
+
+      def create_default_gems_script_if_nonexistent
+        if File.exists? default_gems_file
+          @output.puts "default-gems is already installed!"
+          confirm("Do you wish overwrite this installation?", {
+            accept: -> {
+              create_script 'default-gems.sh'
+            },
+            deny: -> {
+              @output.puts "Existing installation preserved."
+            }
+          })
+        else
+          create_script 'default-gems.sh'
+        end
       end
   end
 
