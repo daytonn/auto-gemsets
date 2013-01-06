@@ -132,7 +132,8 @@ describe AutoGemsets::Application do
     before do
       @scripts = {
         auto_gemsets: File.join('/', 'usr', 'local', 'share', 'auto-gemsets', 'auto-gemsets.sh'),
-        default_gems: File.join('/', 'usr', 'local', 'share', 'auto-gemsets', 'default-gems.sh')
+        default_gems: File.join('/', 'usr', 'local', 'share', 'auto-gemsets', 'default-gems.sh'),
+        config: File.join(ENV['HOME'], '.auto-gemsets')
       }
       FileUtils.mv(@scripts[:auto_gemsets], "#{@scripts[:auto_gemsets]}.bak") if File.exists?(@scripts[:auto_gemsets])
       FileUtils.mv(@scripts[:default_gems], "#{@scripts[:default_gems]}.bak") if File.exists?(@scripts[:default_gems])
@@ -144,6 +145,9 @@ describe AutoGemsets::Application do
 
       FileUtils.rm_rf(@scripts[:default_gems]) if File.exists?(@scripts[:default_gems])
       FileUtils.mv("#{@scripts[:default_gems]}.bak", @scripts[:default_gems]) if File.exists?("#{@scripts[:default_gems]}.bak")
+
+      FileUtils.rm_rf(@scripts[:config]) if File.exists?(@scripts[:config])
+      FileUtils.mv("#{@scripts[:config]}.bak", @scripts[:config]) if File.exists?("#{@scripts[:config]}.bak")
     end
 
     it "copies the auto-gemsets script in the share directory" do
@@ -174,6 +178,12 @@ describe AutoGemsets::Application do
       @app.init
       default_gems_file = File.join(AutoGemsets::ROOT, 'lib', 'auto-gemsets', 'default-gems.sh')
       expect(File.read(@scripts[:default_gems])).to eq(File.read(default_gems_file))
+    end
+
+    it "creates a ~/.auto-gemsets file if one does not exist" do
+      @app.init
+      config_file = File.join(AutoGemsets::ROOT, 'lib', 'auto-gemsets', '.auto-gemsets')
+      expect(File.read(@scripts[:config])).to eq(File.read(config_file))
     end
 
   end

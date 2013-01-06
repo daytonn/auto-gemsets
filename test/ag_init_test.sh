@@ -4,10 +4,21 @@
 
 setUp() {
   clear_env
+  if [ ! -f "${HOME}/.auto-gemsets" ]; then
+    touch "${HOME}/.auto-gemsets"; echo "export AUTO_GEMSETS_REPORTING=on" > "${HOME}/.auto-gemsets"
+  else
+    mv "${HOME}/.auto-gemsets" "${HOME}/.auto-gemsets.bak"
+  fi
 }
 
 tearDown() {
   reset_env
+  if [ -f "${HOME}/.auto-gemsets.bak" ]; then
+    rm -f "${HOME}/.auto-gemsets"
+    mv "${HOME}/.auto-gemsets.bak" "${HOME}/.auto-gemsets"
+  else
+    rm -f "${HOME}/.auto-gemsets"
+  fi
 }
 
 test_it_adds_a_gemset_root_environment_variable() {
@@ -47,6 +58,12 @@ test_it_doesnt_duplicate_the_prompt_command() {
   ag_init
   assertEquals " it doesn't duplicate the PROMPT_COMMAND" \
     "auto_gemsets" "$PROMPT_COMMAND"
+}
+
+test_it_sources_the_auto_gemsets_file() {
+  ag_init
+  assertEquals " it sources the ~/.auto-gemsets file" \
+    "on" "$AUTO_GEMSETS_REPORTING"
 }
 
 
