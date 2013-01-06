@@ -9,7 +9,7 @@ OLD_GEMFILE=$GEMFILE
 OLD_PATH=$PATH
 OLD_PROMPT_COMMAND=$PROMPT_COMMAND
 
-function clear_env() {
+clear_env() {
   unset GEM_HOME
   unset GEM_PATH
   unset GEM_ROOT
@@ -19,7 +19,7 @@ function clear_env() {
   unset PROMPT_COMMAND
 }
 
-function reset_env() {
+reset_env() {
   export GEM_HOME=$OLD_GEM_HOME
   export GEM_PATH=$OLD_GEM_PATH
   export GEM_ROOT=$OLD_GEM_ROOT
