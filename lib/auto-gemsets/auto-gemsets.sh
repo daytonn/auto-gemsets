@@ -5,6 +5,10 @@ ag_init() {
     export DEFAULT_GEMSET="default"
   fi
 
+  if [ -r "${HOME}/.auto-gemsets" ]; then
+    source "${HOME}/.auto-gemsets"
+  fi
+
   # If ZSH add precommand
   if [[ -n "$ZSH_VERSION" ]]; then
     precmd_functions+=("auto_gemsets")
@@ -61,7 +65,9 @@ ag_remove_path() {
 }
 
 ag_using_gemset_via() {
-  echo "Now using $GEMSET gemset via $1"
+  if [ "$AUTO_GEMSETS_REPORTING" == "on" ]; then
+    echo "Now using $GEMSET gemset via $1"
+  fi
 }
 
 ag_add_path() {

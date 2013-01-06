@@ -117,11 +117,29 @@ module AutoGemsets
     end
 
     def init
-      create_auto_gemsets_script_if_nonexistent
-      create_default_gems_script_if_nonexistent
+      if File.exists? script_file
+        @output.puts "auto-gemsets is already installed!"
+        confirm("Do you wish overwrite this installation?", {
+          accept: -> {
+            install_auto_gemsets
+          },
+          deny: -> {
+            @output.puts "Existing installation preserved."
+          }
+        })
+      else
+        install_auto_gemsets
+      end
     end
 
     private
+      def install_auto_gemsets
+        create_script 'auto-gemsets.sh'
+        create_script 'default-gems.sh'
+        config_file = File.join(ENV['HOME'], '.auto-gemsets')
+        FileUtils.cp(File.join(AutoGemsets::ROOT, 'lib', 'auto-gemsets', '.auto-gemsets'), config_file) unless File.exists? config_file
+      end
+
       def parse_options
         @options = {}
         OptionParser.new do |opts|
@@ -188,38 +206,6 @@ module AutoGemsets
       def create_script(script)
         FileUtils.mkdir_p(AutoGemsets::INSTALL_ROOT) unless File.exists? AutoGemsets::INSTALL_ROOT
         FileUtils.cp(File.join(AutoGemsets::ROOT, 'lib', 'auto-gemsets', script), AutoGemsets::INSTALL_ROOT)
-      end
-
-      def create_auto_gemsets_script_if_nonexistent
-        if File.exists? script_file
-          @output.puts "auto-gemsets is already installed!"
-          confirm("Do you wish overwrite this installation?", {
-            accept: -> {
-              create_script 'auto-gemsets.sh'
-            },
-            deny: -> {
-              @output.puts "Existing installation preserved."
-            }
-          })
-        else
-          create_script 'auto-gemsets.sh'
-        end
-      end
-
-      def create_default_gems_script_if_nonexistent
-        if File.exists? default_gems_file
-          @output.puts "default-gems is already installed!"
-          confirm("Do you wish overwrite this installation?", {
-            accept: -> {
-              create_script 'default-gems.sh'
-            },
-            deny: -> {
-              @output.puts "Existing installation preserved."
-            }
-          })
-        else
-          create_script 'default-gems.sh'
-        end
       end
   end
 
