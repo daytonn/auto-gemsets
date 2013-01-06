@@ -6,6 +6,7 @@ PROJECT_DIR="$PWD/test/project"
 
 setUp() {
   clear_env
+  export AUTO_GEMSETS_REPORTING='off'
   if [ ! -d "${GEMSET_ROOT}/project" ]; then
     rm -Rf "${GEMSET_ROOT}/project"
   fi
@@ -20,7 +21,7 @@ tearDown() {
 
 test_it_sets_the_gemfile_environment_variable() {
   cd "$PROJECT_DIR"
-  auto_gemsets > /dev/null
+  auto_gemsets
 
   assertEquals " it sets the gemfile environment variable" \
     "${PROJECT_DIR}/Gemfile" "$GEMFILE"
@@ -28,7 +29,7 @@ test_it_sets_the_gemfile_environment_variable() {
 
 test_it_sets_the_default_gemset_when_no_gemfile_is_present() {
   cd "$HOME"
-  auto_gemsets > /dev/null
+  auto_gemsets
 
   assertEquals " it sets the default when no Gemfile is present" \
     "default" "$GEMSET"
@@ -48,7 +49,7 @@ test_it_sets_the_default_gemset_when_no_gemfile_is_present() {
 
 test_it_sets_the_gemset_when_a_gemfile_is_present() {
   cd "$PROJECT_DIR"
-  auto_gemsets > /dev/null
+  auto_gemsets
 
   assertEquals " it sets the gemset when a Gemfile is present" \
     "project" "$GEMSET"
@@ -74,7 +75,7 @@ test_it_doesnt_do_anything_if_the_gemset_is_active() {
 }
 
 test_it_creates_a_gemset_directory_if_it_does_not_exist() {
-  auto_gemsets > /dev/null
+  auto_gemsets
 
   assertTrue " it creates a gemset directory if it does not exist" \
     "[ -d ${GEMSET_ROOT}/project ]"
