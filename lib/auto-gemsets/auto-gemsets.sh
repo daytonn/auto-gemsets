@@ -23,7 +23,7 @@ function ag_init() {
 
 function ag_set_gemset() {
   if [ "$GEMSET" == "$1" ]; then
-    break
+    return;
   fi
   export GEMSET="${1}"
   export GEM_HOME="${GEMSET_ROOT}/$GEMSET"
@@ -84,14 +84,14 @@ function auto_gemsets() {
 
   until [[ -z "$dir" ]]; do
     if [ "$GEMSET" ] && [ "$GEMSET" == "$(ag_parent_dir ${dir}/Gemfile)" ]; then
-      break
+      return;
     fi
 
     if [ -f "$dir/Gemfile" ]; then
       export GEMFILE="$dir/Gemfile"
       ag_create_gemset_if_missing "$(ag_parent_dir $GEMFILE)"
       ag_set_gemset "$(ag_parent_dir $GEMFILE)"
-      break
+      return;
     fi
 
     if [ -z "${dir%/*}" ]; then
