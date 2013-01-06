@@ -130,7 +130,7 @@ describe AutoGemsets::Application do
   describe 'init' do
 
     before do
-      @script_file = File.join('/', 'usr', 'local', 'share', 'auto_gemsets', 'auto_gemsets.sh')
+      @script_file = File.join('/', 'usr', 'local', 'share', 'auto_gemsets', 'auto-gemsets.sh')
       FileUtils.mv(@script_file, "#{@script_file}.bak") if File.exists?(@script_file)
     end
 
@@ -141,7 +141,7 @@ describe AutoGemsets::Application do
 
     it "copies the auto_gemsets script in the share directory" do
       @app.init
-      script_file = File.join(AutoGemsets::ROOT, 'lib', 'auto-gemsets', 'auto_gemsets.sh')
+      script_file = File.join(AutoGemsets::ROOT, 'lib', 'auto-gemsets', 'auto-gemsets.sh')
       expect(File.read(@script_file)).to eq(File.read(script_file))
     end
 
@@ -160,7 +160,7 @@ describe AutoGemsets::Application do
       @output.should_receive(:puts).once.with("Do you wish overwrite this installation? y/n")
       @input.stub!(:gets).and_return("y")
       @app.init
-      expect(File.read(@script_file)).to eq(File.read(File.join(AutoGemsets::INSTALL_ROOT, 'auto_gemsets.sh')))
+      expect(File.read(@script_file)).to eq(File.read(File.join(AutoGemsets::INSTALL_ROOT, 'auto-gemsets.sh')))
     end
 
   end

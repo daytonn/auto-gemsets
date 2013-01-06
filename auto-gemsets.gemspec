@@ -30,7 +30,7 @@ Gem::Specification.new do |s|
     "bin/gemset",
     "lib/auto-gemsets.rb",
     "lib/auto-gemsets/application.rb",
-    "lib/auto-gemsets/auto_gemsets.sh",
+    "lib/auto-gemsets/auto-gemsets.sh",
     "spec/application_spec.rb",
     "spec/auto-gemsets_spec.rb",
     "spec/spec_helper.rb",

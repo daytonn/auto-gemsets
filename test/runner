@@ -1,0 +1,47 @@
+#!/bin/sh
+
+log() {
+  echo
+  echo "$1"
+  echo
+}
+
+OLD_GEM_HOME=$GEM_HOME
+OLD_GEM_PATH=$GEM_PATH
+OLD_GEM_ROOT=$GEM_ROOT
+OLD_GEMSET=$GEMSET
+OLD_DEFAULT_GEMSET=$DEFAULT_GEMSET
+OLD_GEMFILE=$GEMFILE
+OLD_PATH=$PATH
+OLD_PROMPT_COMMAND=$PROMPT_COMMAND
+
+function clear_env() {
+  unset GEM_HOME
+  unset GEM_PATH
+  unset GEM_ROOT
+  unset GEMSET
+  unset DEFAULT_GEMSET
+  unset GEMFILE
+  unset PROMPT_COMMAND
+}
+
+function reset_env() {
+  export GEM_HOME=$OLD_GEM_HOME
+  export GEM_PATH=$OLD_GEM_PATH
+  export GEM_ROOT=$OLD_GEM_ROOT
+  export GEMSET=$OLD_GEMSET
+  export DEFAULT_GEMSET=$OLD_DEFAULT_GEMSET
+  export GEMFILE=$OLD_GEMFILE
+  export PATH=$OLD_PATH
+  export PROMPT_COMMAND=$OLD_PROMPT_COMMAND
+}
+
+clear_env
+
+for test in $(dirname $0)/*_test.sh; do
+  log ">>> Running $test"
+  $SHELL $test
+  echo '------------------------------------------------------------'
+done
+
+reset_env

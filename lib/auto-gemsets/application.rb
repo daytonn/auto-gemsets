@@ -189,12 +189,12 @@ module AutoGemsets
       end
 
       def script_file
-        File.join(AutoGemsets::INSTALL_ROOT, "auto_gemsets.sh")
+        File.join(AutoGemsets::INSTALL_ROOT, "auto-gemsets.sh")
       end
 
       def create_script
         FileUtils.mkdir_p(AutoGemsets::INSTALL_ROOT) unless File.exists? AutoGemsets::INSTALL_ROOT
-        FileUtils.cp(File.join(AutoGemsets::ROOT, 'lib', 'auto-gemsets', 'auto_gemsets.sh'), AutoGemsets::INSTALL_ROOT)
+        FileUtils.cp(File.join(AutoGemsets::ROOT, 'lib', 'auto-gemsets', 'auto-gemsets.sh'), AutoGemsets::INSTALL_ROOT)
       end
   end
 
