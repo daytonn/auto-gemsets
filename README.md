@@ -19,7 +19,10 @@ The `gemset init` command will create a copy of `auto-gemsets.sh` and `default-g
     source /usr/local/share/auto-gemsets/auto-gemsets.sh
     source /usr/local/share/auto-gemsets/default-gems.sh
     
-In addition to these two scripts, `init` also creates a `~/.auto-gemsets` config file to allow for customization of `auto-gemsets`.
+In addition to these two scripts, `init` also creates a `~/.auto-gemsets` config file to allow for customization of `auto-gemsets`. Currently this file contains only one setting which determines whether or not auto-gemsets reports when it switches gemsets. You can turn reporting on and off by setting the `AUTO_GEMSETS_REPORTING` variable `on` or `off`
+
+    export AUTO_GEMSETS_REPORTING=on
+    export AUTO_GEMSETS_REPORTING=off
     
 Once you source `.bashrc`, `.bash_profile`, or `~/.zshrc` (`source ~/.bashrc`) or open a new terminal auto-gemsets will now be active and managing your ruby gems.
 
