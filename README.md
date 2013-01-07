@@ -14,22 +14,31 @@ Any `Gemfile` you encounter will cause auto-gemsets to automatically create and 
 
 ### Configuration:
 
-The `gemset init` command will create a copy of `auto-gemsets.sh` into `/usr/local/share/auto-gemsets` To use auto-gemsets, you will need to source this file in your `~/.bashrc` (`~/.bash_profile` on OSX) or `~/.zshrc` file.
+The `gemset init` command will create a copy of `auto-gemsets.sh` and `default-gems.sh` into `/usr/local/share/auto-gemsets` To use auto-gemsets, you will need to source these files in your `~/.bashrc` (`~/.bash_profile` on OSX) or `~/.zshrc` file.
 
     source /usr/local/share/auto-gemsets/auto-gemsets.sh
+    source /usr/local/share/auto-gemsets/default-gems.sh
+    
+In addition to these two scripts, `init` also creates a `~/.auto-gemsets` config file to allow for customization of `auto-gemsets`.
+    
+Once you source `.bashrc`, `.bash_profile`, or `~/.zshrc` (`source ~/.bashrc`) or open a new terminal auto-gemsets will now be active and managing your ruby gems.
 
-That's it, reload your `.bashrc` (`source ~/.bashrc`) or open a new terminal and auto-gemsets will now be managing your ruby gems environment.
+Since, `auto-gemsets` creates a new default gemset, you will need to reinstall `auto-gemsets` to use the `gemset` command.
 
-NOTE: If you've already installed `auto-gemsets` you will receive a warning asking you if you wish to overwrite this installation. You may want to do this after updating your `auto-gemsets` version
+    gem install auto-gemsets
+
+A NOTE ON UPGRADING: If you've already installed `auto-gemsets` you will receive a warning asking you if you wish to overwrite this installation. You may want to do this after updating your `auto-gemsets` version
 
 ### Default Gemset:
 
-A default gemset will be created for you based on your username. Given a username of `daytonn` on an OS X machine, the default gemset path would be `/Users/daytonn/.gemsets/daytonn`. If you wish to override this setting simply set the `DEFAULT_GEMSET` variable somewhere in your `.bashrc`, `.bash_profile`, or `.zshrc` depending on your environment:
+A default gemset will be created for you when you run `gemset init` in `~/.gemsets/default`.
+
+If you wish to override this location simply set the `DEFAULT_GEMSET` variable somewhere in your `.bashrc`, `.bash_profile`, or `.zshrc` depending on your environment:
 
     # auto-gemsets
     export DEFAULT_GEMSET="/custom/path/to/default_gemset"
 
-auto-gemsets will add this gemset to your `GEM_PATH` and add it's bin directory to your `PATH`. This gemset will always be active. When another gemset is also active, installed gems will automatically belong to that gemset. When _ONLY_ the default gemset is active, installed gems will belong to the default gemset.
+auto-gemsets will add this gemset to your `GEM_PATH` and add it's bin directory to your `PATH`. This gemset will always be active. When another gemset is also active, installed gems will automatically belong to that gemset. When _ONLY_ the `default` gemset is active, installed gems will belong to the `default` gemset.
 
 ## Command Line
 
