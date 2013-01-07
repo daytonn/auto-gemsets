@@ -57,9 +57,3 @@ mv, rename
 Renames the given gemset with the given name within the `GEMSET_ROOT`.
 If the new gemset name conflicts with an existing gemset,
 a confirmation dialog will ask if you wish to continue
-
-edit
-----
-    gemset edit (gemset)
-
-Opens the gemset's Gemfile in your default `EDITOR` or `TERM_EDITOR`

@@ -111,11 +111,6 @@ module AutoGemsets
       end
     end
 
-    def edit
-      raise "You must set $EDITOR or $TERM_EDITOR to edit Gemfiles" unless ENV['EDITOR'] || ENV['TERM_EDITOR']
-      %x{#{ENV['EDITOR'] || ENV['TERM_EDITOR']} #{ENV['GEMFILE']}} if File.exists ENV['GEMFILE']
-    end
-
     def init
       if File.exists? script_file
         @output.puts "auto-gemsets is already installed!"
