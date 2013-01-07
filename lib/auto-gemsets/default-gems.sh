@@ -1,7 +1,7 @@
 default-gems() {
   if [ -z "$1" ]; then
     cat <<EOF
-The defalt-gems command is an auto-gems utility to manage gems
+The defalt-gems command is an auto-gemsets utility to manage gems
 in the default* gemset from within other gemsets.
 
 Usage:

@@ -37,19 +37,27 @@ Although auto-gemsets focuses on automatic management of your gemsets, there are
 
 See the [HELP](https://github.com/daytonn/auto-gemsets/blob/master/HELP.md) file for `gemset`'s Documentation.
 
+There is also a utility that allows you to isolate your `default` gemset when running gem commands named `default-gems`
+
+For more documentation simply type
+
+    default-gems
+
 ## default-gems
-The defalt-gemset command is an auto-gems utility to manage gems
+The defalt-gems command is an auto-gemsets utility to manage gems
 in the default* gemset from within other gemsets.
 
-### Usage:
+Usage:
+------
 
-    default-gems (command) [options]
+  default-gems (command) [options]
 
-### Examples:
+Examples:
+---------
 
-    default-gems install rake
-    default-gems uninstall rake -v=10.0.1
-    default-gems list --local
+  default-gems install mygem
+  default-gems uninstall mygem
+  default-gems list
 
-`default-gems` accepts any valid `gem` command, with any valid arguments and options.
-It is simply a pass-through to the `gem` command with the context of the default gemset.
+default-gems accepts any valid gem command, with any valid arguments and options.
+It is simply a pass-through to the gem command with the context of the default gemset.
