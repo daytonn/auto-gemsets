@@ -64,3 +64,13 @@ open
     gemset open [gemset]
 
 Opens the gemset directory in your file manager
+
+version
+-------
+
+Displays the installed version of `auto-gemsets`
+
+help
+----
+
+Displays this menu

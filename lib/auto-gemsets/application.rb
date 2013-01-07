@@ -18,6 +18,20 @@ module AutoGemsets
                 :options
 
     def initialize(output = $stdout, input = $stdin, args = Array.try_convert(ARGV))
+      @commands = [
+        :init,
+        :list,
+        :ls,
+        :rm,
+        :remove,
+        :touch,
+        :create,
+        :mv,
+        :rename,
+        :open,
+        :help,
+        :version
+      ]
       @output = output
       @input = input
       @args = args
@@ -32,7 +46,11 @@ module AutoGemsets
     end
 
     def run
-      self.send @command, *@args
+      if @commands.include? @command
+        self.send @command, *@args
+      else
+        puts "Unknown command #{@command}"
+      end
     end
 
     def ls
