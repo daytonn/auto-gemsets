@@ -1,8 +1,14 @@
 #Changelog
 
-## Version 0.3.1 (unreleased)
+## Version 0.4.0 (unreleased)
   - Create default gemset if one does not exist
-
+  - Complete shunit2 test suite coverage (and subsequent refactor/overhall)
+  - Default gemset is now simply called default
+  - Renamed `/usr/local/share/auto_gemsets` to `/usr/local/share/auto-gemsets`
+  - Added configuration file `~/.auto-gemsets` to turn on/off reporting
+  - `gemset init` creates `auto-gemsets.sh`, `default-gems.sh`, and `.auto-gemsets`
+  - `gemset init` creates the default gemset
+  
 ## Version 0.3.0
   - No longer setting the auto_gemsets.sh file as executable
   - Change `default-gemsets` to `default-gems`
