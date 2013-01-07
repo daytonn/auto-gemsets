@@ -23,6 +23,8 @@ ag_init() {
       PROMPT_COMMAND="auto_gemsets"
     fi
   fi
+
+  auto_gemsets
 }
 
 ag_set_gemset() {

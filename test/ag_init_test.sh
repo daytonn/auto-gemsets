@@ -66,5 +66,25 @@ test_it_sources_the_auto_gemsets_file() {
     "on" "$AUTO_GEMSETS_REPORTING"
 }
 
+test_it_calls_auto_gemsets() {
+  cd "$HOME"
+  ag_init > /dev/null
+
+  assertEquals " it sets the default when no Gemfile is present" \
+    "default" "$GEMSET"
+
+  assertEquals " it sets the GEM_HOME when no Gemfile is present" \
+    "${GEMSET_ROOT}/default" "$GEM_HOME"
+
+  assertEquals " it sets the GEM_HOME when no Gemfile is present" \
+    "${GEMSET_ROOT}/default" "$GEM_ROOT"
+
+  assertEquals " it sets the GEM_PATH when no Gemfile is present" \
+    "${GEMSET_ROOT}/default" "$GEM_PATH"
+
+  assertNotNull " it adds the gemset's bin directory to the path" \
+    "$(echo $PATH | grep "${GEMSET_ROOT}/default/bin")"
+}
+
 
 SHUNIT_PARENT=$0 . $SHUNIT2
