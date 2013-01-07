@@ -18,9 +18,20 @@ clear_env() {
   unset DEFAULT_GEMSET
   unset GEMFILE
   unset PROMPT_COMMAND
+  unset AUTO_GEMSETS_REPORTING
+  mv "/usr/local/share/auto-gemsets" "/usr/local/share/auto-gemsets.bak"
+
+  if [ -f "${HOME}/.auto-gemsets" ]; then
+    mv "${HOME}/.auto-gemsets" "${HOME}/.auto-gemsets.bak"
+  fi
 }
 
 reset_env() {
+  rm -Rf "/usr/local/share/auto-gemsets"
+  mv "/usr/local/share/auto-gemsets.bak" "/usr/local/share/auto-gemsets"
+  if [ -f "${HOME}/.auto-gemsets.bak" ]; then
+    mv "${HOME}/.auto-gemsets.bak" "${HOME}/.auto-gemsets"
+  fi
   export GEM_HOME=$OLD_GEM_HOME
   export GEM_PATH=$OLD_GEM_PATH
   export GEM_ROOT=$OLD_GEM_ROOT
@@ -35,8 +46,6 @@ reset_env() {
 [[ -z "$SHUNIT2" ]] && SHUNIT2=/usr/share/shunit2/shunit2
 
 . ./lib/auto-gemsets/auto-gemsets.sh
-
-
 
 setUp() { return; }
 tearDown() { return; }

@@ -137,7 +137,10 @@ module AutoGemsets
         create_script 'auto-gemsets.sh'
         create_script 'default-gems.sh'
         config_file = File.join(ENV['HOME'], '.auto-gemsets')
+        default_gemset_dir = File.join(AutoGemsets::GEMSET_ROOT, 'default')
         FileUtils.cp(File.join(AutoGemsets::ROOT, 'lib', 'auto-gemsets', '.auto-gemsets'), config_file) unless File.exists? config_file
+        FileUtils.mkdir_p(AutoGemsets::GEMSET_ROOT) unless File.exists?(AutoGemsets::GEMSET_ROOT)
+        FileUtils.mkdir_p(default_gemset_dir) unless File.exists?(default_gemset_dir)
       end
 
       def parse_options

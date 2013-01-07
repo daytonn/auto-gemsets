@@ -137,6 +137,7 @@ describe AutoGemsets::Application do
       }
       FileUtils.mv(@scripts[:auto_gemsets], "#{@scripts[:auto_gemsets]}.bak") if File.exists?(@scripts[:auto_gemsets])
       FileUtils.mv(@scripts[:default_gems], "#{@scripts[:default_gems]}.bak") if File.exists?(@scripts[:default_gems])
+      FileUtils.mv(AutoGemsets::GEMSET_ROOT, "#{AutoGemsets::GEMSET_ROOT}.bak") if File.exists? AutoGemsets::GEMSET_ROOT
     end
 
     after do
@@ -148,6 +149,8 @@ describe AutoGemsets::Application do
 
       FileUtils.rm_rf(@scripts[:config]) if File.exists?(@scripts[:config])
       FileUtils.mv("#{@scripts[:config]}.bak", @scripts[:config]) if File.exists?("#{@scripts[:config]}.bak")
+      FileUtils.rm_rf(AutoGemsets::GEMSET_ROOT) if File.exists? AutoGemsets::GEMSET_ROOT
+      FileUtils.mv("#{AutoGemsets::GEMSET_ROOT}.bak", AutoGemsets::GEMSET_ROOT) if File.exists? "#{AutoGemsets::GEMSET_ROOT}.bak"
     end
 
     it "copies the auto-gemsets script in the share directory" do
@@ -184,6 +187,16 @@ describe AutoGemsets::Application do
       @app.init
       config_file = File.join(AutoGemsets::ROOT, 'lib', 'auto-gemsets', '.auto-gemsets')
       expect(File.read(@scripts[:config])).to eq(File.read(config_file))
+    end
+
+    it "creates the GEMSET_ROOT directory" do
+      @app.init
+      expect(File.exists?(AutoGemsets::GEMSET_ROOT)).to be_true
+    end
+
+    it "creates the default gemset folder" do
+      @app.init
+      expect(File.exists?(File.join(AutoGemsets::GEMSET_ROOT, 'default'))).to be_true
     end
 
   end

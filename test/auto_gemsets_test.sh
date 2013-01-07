@@ -6,7 +6,6 @@ PROJECT_DIR="$PWD/test/project"
 
 setUp() {
   clear_env
-  export AUTO_GEMSETS_REPORTING='off'
   if [ ! -d "${GEMSET_ROOT}/project" ]; then
     rm -Rf "${GEMSET_ROOT}/project"
   fi
