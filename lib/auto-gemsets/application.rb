@@ -95,7 +95,7 @@ module AutoGemsets
 
     def open(gemset = nil)
       command = case
-      when AutoGemsets::on_OSX?
+      when AutoGemsets::on_osx?
         'open'
       when AutoGemsets::on_linux?
         'xdg-open'
@@ -103,12 +103,9 @@ module AutoGemsets
         'explorer'
       end
 
-      if gemset
-        %x{#{command} #{gemset_path(gemset)}} if File.exists?(gemset_path(gemset))
-        @output.puts "No gemset named #{gemset}!" unless File.exists?(gemset_path(gemset))
-      else
-        %x{#{command} #{AutoGemsets::GEMSET_ROOT}}
-      end
+      gs = gemset || ENV['GEMSET'] || 'default'
+      %x(#{command} #{gemset_path(gs)}) if File.exists? gemset_path(gs)
+      @output.puts "No gemset named #{gemset}!" unless File.exists?(gemset_path(gs))
     end
 
     def init

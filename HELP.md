@@ -16,6 +16,7 @@ Examples:
     gemset edit mygemset
     gemset help
     gemset version
+    gemset open
 
 Commands:
 ========
@@ -57,3 +58,9 @@ mv, rename
 Renames the given gemset with the given name within the `GEMSET_ROOT`.
 If the new gemset name conflicts with an existing gemset,
 a confirmation dialog will ask if you wish to continue
+
+open
+----
+    gemset open [gemset]
+
+Opens the gemset directory in your file manager
