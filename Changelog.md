@@ -1,5 +1,8 @@
 #Changelog
 
+## Version 0.4.1
+  - Update HELP menu for `gemset`
+
 ## Version 0.4.0
   - Create default gemset if one does not exist
   - Complete shunit2 test suite coverage (and subsequent refactor/overhall)
