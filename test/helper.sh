@@ -46,6 +46,7 @@ reset_env() {
 [[ -z "$SHUNIT2" ]] && SHUNIT2=/usr/share/shunit2/shunit2
 
 . ./lib/auto-gemsets/auto-gemsets.sh
+. ~/.colors
 
 setUp() { return; }
 tearDown() { return; }
