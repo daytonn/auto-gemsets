@@ -46,14 +46,8 @@ reset_env() {
 [[ -z "$SHUNIT2" ]] && SHUNIT2=/usr/share/shunit2/shunit2
 
 . ./lib/auto-gemsets/auto-gemsets.sh
+. ~/.colors
 
 setUp() { return; }
 tearDown() { return; }
-oneTimeTearDown() {
-  if [ "$__shunit_assertsFailed" -gt "0" ]; then
-    echo
-    echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-    echo "!!------------------------------------------------ FAILURE ------------------------------------------------!!"
-    echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-  fi
-}
+oneTimeTearDown() { return; }

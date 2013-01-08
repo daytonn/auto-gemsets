@@ -49,10 +49,13 @@ Rake::RDocTask.new do |rdoc|
 end
 
 
-namespace :sh do
-
-  task :test do
+namespace :test do
+  task :sh do
     puts %x{sh test/runner}
   end
 
+  task :all do
+    Rake::Task["spec"].invoke
+    Rake::Task["test:sh"].invoke
+  end
 end

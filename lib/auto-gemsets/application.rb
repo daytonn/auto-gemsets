@@ -30,7 +30,8 @@ module AutoGemsets
         :rename,
         :open,
         :help,
-        :version
+        :version,
+        :current
       ]
       @output = output
       @input = input

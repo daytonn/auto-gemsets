@@ -14,6 +14,7 @@ describe AutoGemsets::Application do
     @env_default_gemset = ENV['DEFAULT_GEMSET']
     ENV['DEFAULT_GEMSET'] = 'mygemset'
     ENV['GEMSET'] = @gemset
+    ENV['AUTO_GEMSETS_REPORTING'] = 'on'
   end
 
   after do
@@ -156,7 +157,7 @@ describe AutoGemsets::Application do
     it "copies the auto-gemsets script in the share directory" do
       @app.init
       script_file = File.join(AutoGemsets::ROOT, 'lib', 'auto-gemsets', 'auto-gemsets.sh')
-      expect(File.read(@scripts[:auto_gemsets])).to eq(File.read(script_file))
+      File.read(@scripts[:auto_gemsets]).should == File.read(script_file)
     end
 
     it "warns if the script is already loaded and does nothing when y is not pressed" do
@@ -174,19 +175,20 @@ describe AutoGemsets::Application do
       @output.should_receive(:puts).once.with("Do you wish overwrite this installation? y/n")
       @input.stub!(:gets).and_return("y")
       @app.init
-      expect(File.read(@scripts[:auto_gemsets])).to eq(File.read(File.join(AutoGemsets::INSTALL_ROOT, 'auto-gemsets.sh')))
+
+      File.read(@scripts[:auto_gemsets]).should == File.read(File.join(AutoGemsets::INSTALL_ROOT, 'auto-gemsets.sh'))
     end
 
     it "copies the default-gems script in the share directory" do
       @app.init
       default_gems_file = File.join(AutoGemsets::ROOT, 'lib', 'auto-gemsets', 'default-gems.sh')
-      expect(File.read(@scripts[:default_gems])).to eq(File.read(default_gems_file))
+      File.read(@scripts[:default_gems]).should == File.read(default_gems_file)
     end
 
     it "creates a ~/.auto-gemsets file if one does not exist" do
       @app.init
       config_file = File.join(AutoGemsets::ROOT, 'lib', 'auto-gemsets', '.auto-gemsets')
-      expect(File.read(@scripts[:config])).to eq(File.read(config_file))
+      File.read(@scripts[:config]).should == File.read(config_file)
     end
 
     it "creates the GEMSET_ROOT directory" do

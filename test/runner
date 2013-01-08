@@ -1,13 +1,5 @@
 #!/bin/sh
-
-log() {
-  echo
-  echo "$1"
-  echo
-}
-
 for test in $(dirname $0)/*_test.sh; do
-  log ">>> Running $test"
+  echo "\xE2\x9E\xA4 Running $test"
   $SHELL $test
-  echo '------------------------------------------------------------'
 done
