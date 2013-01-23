@@ -1,5 +1,5 @@
 #!/bin/sh
 for test in $(dirname $0)/*_test.sh; do
-  echo "\xE2\x9E\xA4 Running $test"
+  echo "Running $test"
   $SHELL $test
 done

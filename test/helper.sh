@@ -43,7 +43,7 @@ reset_env() {
   export AUTO_GEMSETS_REPORTING=$OLD_AUTO_GEMSETS_REPORTING
 }
 
-[[ -z "$SHUNIT2" ]] && SHUNIT2=/usr/share/shunit2/shunit2
+[[ -z "$SHUNIT2" ]] && SHUNIT2=~/Development/shunit2C/src/shunit2
 
 . ./lib/auto-gemsets/auto-gemsets.sh
 . ~/.colors

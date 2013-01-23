@@ -1,5 +1,9 @@
 #Changelog
 
+## Edge
+  - Add destroy command to remove gemset entirely
+  - Add clear command to blow out all gems
+
 ## Version 0.4.1
   - Update HELP menu for `gemset`
 
@@ -11,7 +15,7 @@
   - Added configuration file `~/.auto-gemsets` to turn on/off reporting
   - `gemset init` creates `auto-gemsets.sh`, `default-gems.sh`, and `.auto-gemsets`
   - `gemset init` creates the default gemset
-  
+
 ## Version 0.3.0
   - No longer setting the auto_gemsets.sh file as executable
   - Change `default-gemsets` to `default-gems`

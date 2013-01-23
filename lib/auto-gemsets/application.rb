@@ -19,19 +19,21 @@ module AutoGemsets
 
     def initialize(output = $stdout, input = $stdin, args = Array.try_convert(ARGV))
       @commands = [
+        :clear,
+        :create,
+        :current,
+        :destroy,
+        :help,
         :init,
         :list,
         :ls,
-        :rm,
-        :remove,
-        :touch,
-        :create,
         :mv,
-        :rename,
         :open,
-        :help,
-        :version,
-        :current
+        :remove,
+        :rename,
+        :rm,
+        :touch,
+        :version
       ]
       @output = output
       @input = input
@@ -143,7 +145,51 @@ module AutoGemsets
       end
     end
 
+    def clear(gemset)
+      unless File.exists? gemset_path(gemset)
+        @output.puts "#{gemset} gemset does not exist. No gemsets were harmed."
+        return
+      end
+
+      confirm("Are you sure you want to clear #{gemset}?", {
+        accept: -> {
+          clear_gemset gemset
+        },
+        deny: -> {
+          @output.puts "That was close, no gemsets were harmed."
+        }
+      })
+    end
+
+    def destroy(gemset)
+      unless File.exists? gemset_path(gemset)
+        @output.puts "#{gemset} gemset does not exist. No gemsets were harmed."
+        return
+      end
+
+      confirm("Are you sure you want to destroy #{gemset}?", {
+        accept: -> {
+          delete_gemset gemset
+        },
+        deny: -> {
+          @output.puts "That was close, no gemsets were harmed."
+        }
+      })
+    end
+
     private
+
+      def delete_gemset(gemset)
+        FileUtils.rm_rf gemset_path(gemset)
+        @output.puts "#{gemset} destroyed!"
+      end
+
+      def clear_gemset(gemset)
+        FileUtils.rm_rf gemset_path(gemset)
+        FileUtils.mkdir_p gemset_path(gemset)
+        @output.puts "#{gemset} cleared!"
+      end
+
       def install_auto_gemsets
         create_script 'auto-gemsets.sh'
         create_script 'default-gems.sh'
