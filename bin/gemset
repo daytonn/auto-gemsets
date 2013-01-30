@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
-$: << File.expand_path(File.join(File.dirname(__FILE__), "../lib"))
+$: << File.join(File.expand_path('../', File.dirname(__FILE__)), 'lib')
+
 require 'auto-gemsets'
 AutoGemsets::application.run
