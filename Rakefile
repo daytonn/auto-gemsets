@@ -19,6 +19,10 @@ rescue Bundler::BundlerError => e
   exit e.status_code
 end
 
+def project_dir(subdir = '')
+  File.join File.dirname(__FILE__), *subdir.split('/')
+end
+
 RSpec::Core::RakeTask.new(:spec) do |spec|
   spec.pattern = FileList['spec/**/*_spec.rb']
 end
@@ -69,11 +73,20 @@ Rake::PackageTask.new("auto-gemsets", AutoGemsets::VERSION) do |p|
 end
 
 task :clean do
-  pkg_dir = File.join(File.dirname(__FILE__), "pkg")
-  FileUtils.rm_rf pkg_dir if File.exists? pkg_dir
+  FileUtils.rm_rf project_dir("pkg") if File.exists? project_dir("pkg")
 end
 
 task :build do
   Rake::Task["clean"].invoke
   Rake::Task["package"].invoke
+end
+
+task :dist do
+  tarball = project_dir "pkg/auto-gemsets-#{AutoGemsets::VERSION}.tgz"
+  if File.exists? tarball
+    FileUtils.cp_r tarball, project_dir
+    puts "Copied tarball to project root"
+  else
+    puts 'Tarball does not exist, try rake build && rake dist'
+  end
 end
