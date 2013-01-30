@@ -73,7 +73,7 @@ task :clean do
   FileUtils.rm_rf pkg_dir if File.exists? pkg_dir
 end
 
-task :cleanpkg do
+task :build do
   Rake::Task["clean"].invoke
   Rake::Task["package"].invoke
 end
