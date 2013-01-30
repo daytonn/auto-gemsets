@@ -10,6 +10,7 @@ require 'rspec/core'
 require 'rspec/core/rake_task'
 require 'rdoc/task'
 require 'auto-gemsets'
+require 'net/ftp'
 
 begin
   Bundler.setup(:default, :development)
@@ -88,5 +89,40 @@ task :dist do
     puts "Copied tarball to project root"
   else
     puts 'Tarball does not exist, try rake build && rake dist'
+  end
+  Rake::Task['ftp'].invoke
+end
+
+task :ftp do
+  ftp_files("pkg", FileList["pkg/**/*"], "daytonnolan.com/auto-gemsets", 'daytonnolan.com', ENV['FTP_USERNAME'], ENV['FTP_PASSWORD'])
+end
+
+def ftp_files(prefixToRemove, sourceFileList, targetDir, hostname, username, password)
+  Net::FTP.open(hostname, username, password) do |ftp|
+  begin
+    puts "Creating dir #{targetDir}"
+    ftp.mkdir targetDir
+  rescue
+    puts $!
+  end
+  sourceFileList.each do |srcFile|
+    if prefixToRemove
+      targetFile = srcFile.pathmap(("%{^#{prefixToRemove},#{targetDir}}p"))
+    else
+      targetFile = srcFile.pathmap("#{targetDir}%s%p")
+    end
+    begin
+      puts "Creating dir #{targetFile}" if File.directory?(srcFile)
+      ftp.mkdir targetFile if File.directory?(srcFile)
+    rescue
+      puts $!
+    end
+    begin
+      puts "Copying #{srcFile} -> #{targetFile}" unless File.directory?(srcFile)
+      ftp.putbinaryfile(srcFile, targetFile) unless File.directory?(srcFile)
+    rescue
+      puts $!
+    end
+  end
   end
 end
