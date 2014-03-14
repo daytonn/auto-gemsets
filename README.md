@@ -66,10 +66,11 @@ Usage:
 
 Examples:
 ---------
-
+```sh
   default-gems install mygem
   default-gems uninstall mygem
   default-gems list
+```
 
 default-gems accepts any valid gem command, with any valid arguments and options.
 It is simply a pass-through to the gem command with the context of the default gemset.
